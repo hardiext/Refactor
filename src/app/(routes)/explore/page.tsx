@@ -1,29 +1,25 @@
 "use client";
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import Container from "../components/atoms/container";
 import ExploreNav from "../components/organisms/explore-nav";
 import { useSearchParams } from "next/navigation";
 import useJobs, { FilterOptions } from "@/hook/usejob";
 import dynamic from "next/dynamic";
-import { StairStepLoader } from "react-loaderkit";
 
-const FilterAside = dynamic(
-  () => import("../components/organisms/filter-aside"),
-  { ssr: false }
-);
-const CardJobList = dynamic(() => import("../components/organisms/job-list"), {
-  ssr: false,
-});
-const ExplorePage = () => {
+const FilterAside = dynamic(() => import("../components/organisms/filter-aside"), { ssr: false });
+const CardJobList = dynamic(() => import("../components/organisms/job-list"), { ssr: false });
+
+// Komponen yang menggunakan useSearchParams harus di dalam Suspense
+const ExploreContent = () => {
   const searchParams = useSearchParams();
-  const [filters, setFilters] = React.useState<FilterOptions>({
+  const [filters, setFilters] = useState<FilterOptions>({
     searchText: "",
     location: "",
     jobType: "",
     salaryRange: "",
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const searchText = searchParams.get("searchText") || "";
     const location = searchParams.get("location") || "";
     const jobType = searchParams.get("jobType") || "";
@@ -40,12 +36,10 @@ const ExplorePage = () => {
   const { jobs, loading, error } = useJobs(filters);
 
   return (
-    <Container>
-      <Suspense fallback={<div>Loading filter...</div>}>
-        <ExploreNav onSearchChange={setFilters} />
-      </Suspense>
+    <>
+      <ExploreNav onSearchChange={setFilters} />
       <main className="min-h-screen overflow-hidden">
-        <div className="w-full  flex items-center ">
+        <div className="w-full flex items-center">
           <div className="max-w-3xs w-full lg:block hidden">
             <FilterAside />
           </div>
@@ -54,7 +48,18 @@ const ExplorePage = () => {
           </div>
         </div>
       </main>
+    </>
+  );
+};
+
+const ExplorePage = () => {
+  return (
+    <Container>
+      <Suspense fallback={<div>Loading filter...</div>}>
+        <ExploreContent />
+      </Suspense>
     </Container>
   );
 };
+
 export default ExplorePage;

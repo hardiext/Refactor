@@ -11,7 +11,7 @@ const popularSearchData = [
 
 const PopularSearch = () => {
   return (
-    <div className="w-full popular-scroll overflow-x-auto flex items-center space-x-2 ">
+    <div className="w-full popular-scroll overflow-x-auto scroll flex items-center space-x-2 ">
       <Label className="flex-shrink-0 text-neutral-700 text-xs lg:text-white">Popular:</Label>
       <div className="flex gap-3 items-center">
         {popularSearchData.map((item, index) => (
