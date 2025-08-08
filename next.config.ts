@@ -1,7 +1,21 @@
+// next.config.ts
 import type { NextConfig } from "next";
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  reactStrictMode: true,
+  images: {
+    domains: [
+      'source.unsplash.com',
+      "1000logos.net",
+      "pluspng.com",
+      "logospng.org",
+      "www.pngarts.com",
+      "upload.wikimedia.org"
+    ]
+  }
 };
 
-export default nextConfig;
+export default withBundleAnalyzer(nextConfig);
