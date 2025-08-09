@@ -1,12 +1,9 @@
 import { Mail, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
-export default function EmailConfirmPage({
-  searchParams,
-}: { searchParams: Record<string, string | string[] | undefined> }) {
-  const email = decodeURIComponent(
-    Array.isArray(searchParams.email) ? searchParams.email[0] : searchParams.email ?? ""
-  );
+export default function EmailConfirmPage() {
+  // Kalau mau, bisa hardcode emailnya di sini
+  // const email = "user@example.com";
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-pink-50 px-6">
@@ -22,9 +19,7 @@ export default function EmailConfirmPage({
         </h1>
 
         <p className="mt-3 text-center text-gray-600 leading-relaxed">
-          We’ve sent a confirmation link to{" "}
-          <span className="font-medium text-pink-500">{email}</span>.
-          <br />
+          We’ve sent a confirmation link to your email.<br />
           Please open your email inbox and click the link to verify your account.
         </p>
 
