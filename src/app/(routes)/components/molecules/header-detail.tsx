@@ -3,6 +3,7 @@ import { JobDetailType } from "@/types/job";
 import { Location01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import React from "react";
+import ApplyForm from "../organisms/apply-form";
 
 interface HeaderDetailProps {
   job: JobDetailType;
@@ -45,18 +46,28 @@ const HeaderDetail: React.FC<HeaderDetailProps> = ({ job }) => {
           </ul>
         </div>
         <div className="space-x-2 bloc lg:hidden mt-4">
-          <Button className="bg-pink-500 text-white px-4 tex-xs rounded-xs">
-            Apply Now
-          </Button>
+          <ApplyForm
+            jobId={job.id}
+            job_title={job.job_title}
+            company_name={job.company_name}
+            city={job.city}
+            country={job.country}
+            work_type={job.work_type}
+          />
           <Button className="text-pink-500  bg-white border border-pink-500 px-4 tex-xs rounded-xs hover:bg-white">
             Save
           </Button>
         </div>
       </div>
       <div className="space-x-2 lg:block hidden">
-        <Button className="bg-pink-500 text-white px-4 tex-xs rounded-xs">
-          Apply Now
-        </Button>
+          <ApplyForm
+            jobId={job.id}
+            job_title={job.job_title}
+            company_name={job.company_name}
+            city={job.city}
+            country={job.country}
+            work_type={job.work_type}
+          />
         <Button className="text-pink-500  bg-white border border-pink-500 px-4 tex-xs rounded-xs hover:bg-white">
           Save
         </Button>
