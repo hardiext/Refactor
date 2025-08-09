@@ -146,7 +146,7 @@ export default function TrackingLamaran() {
   ];
 
   return (
-    <div className="mx-auto p-4 sm:p-6 bg-white min-h-screen max-w-[95vw] sm:max-w-[90vw] lg:max-w-7xl">
+    <div className="mx-auto p-4 lg:pb-6 pb-[80px] sm:p-6 bg-white min-h-screen max-w-[95vw] sm:max-w-[90vw] lg:max-w-7xl">
       {/* HEADER */}
       <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <div className="flex items-center gap-3">
