@@ -13,7 +13,7 @@ import {
 const navItems = [
   { label: "Home", href: "/", icon: Home },
   { label: "Explore", href: "/explore", icon: Compass },
-  { label: "Messages", href: "/messages", icon: MessageCircle },
+  { label: "Messages", href: "/message", icon: MessageCircle },
   { label: "Tracking", href: "/tracking", icon: Package },
   { label: "Profile", href: "/profile", icon: User },
 ];
