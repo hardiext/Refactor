@@ -190,14 +190,13 @@ const ApplyForm = ({
   return (
     <>
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
-        {/* Ganti SheetTrigger jadi tombol biasa yang handle onClick */}
         <button
           onClick={handleApplyClick}
           className="bg-pink-500 text-white px-4 h-9 tex-xs rounded-xs cursor-pointer"
         >
           Apply form
         </button>
-        <SheetContent className="pt-6  sm:max-w-[490px] overflow-y-auto">
+        <SheetContent className="pt-6  lg:max-w-[490px] max-w-[100vw] overflow-y-auto">
           <SheetHeader className="border-b">
             <SheetTitle className="text-xl">{job_title}</SheetTitle>
             <SheetDescription className="flex items-center space-x-6 text-xs text-gray-500 mt-2">

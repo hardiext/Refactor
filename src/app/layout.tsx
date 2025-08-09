@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ConditionalNavbar from "@/components/conditional";
+import BottomNav from "./(routes)/components/molecules/bottom-nav";
 
 
 const geistSans = Geist({
@@ -32,7 +33,8 @@ export default function RootLayout({
       >
         <ConditionalNavbar/>
         {children}
-   
+        <BottomNav/>
+
       </body>
     </html>
   );
