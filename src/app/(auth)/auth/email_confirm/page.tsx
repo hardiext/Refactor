@@ -4,9 +4,9 @@ import Link from "next/link";
 export default function EmailConfirmPage({
   searchParams,
 }: {
-  searchParams: URLSearchParams;
+  searchParams: { email?: string | undefined };
 }) {
-  const email = decodeURIComponent(searchParams.get("email") ?? "");
+  const email = decodeURIComponent(searchParams.email ?? "");
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-pink-50 px-6">
