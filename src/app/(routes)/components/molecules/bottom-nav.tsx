@@ -4,9 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Home,
-  Compass,     // explore icon
+  Compass,   
   MessageCircle,
-  Package,     // tracking icon
+  Package,     
   User,
 } from "lucide-react";
 
@@ -17,7 +17,7 @@ const navItems = [
   { label: "Tracking", href: "/tracking", icon: Package },
   { label: "Profile", href: "/profile", icon: User },
 ];
-
+  
 export default function BottomNav() {
   const pathname = usePathname();
 

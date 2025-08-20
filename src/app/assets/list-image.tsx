@@ -7,6 +7,8 @@ import interview from './interview-blog.jpg'
 import remote from './remote-blog.jpg'
 import resume from './resume-blog.jpeg'
 import fallback from './fallback.png'
+import tumbnail from './tumbnail_profile.jpg'
+import exampePoto from './example-1.jpg'
 const images = {
     logo,
     meta,
@@ -16,6 +18,8 @@ const images = {
     interview,
     remote,
     resume,
-    fallback
+    fallback,
+    tumbnail,
+    exampePoto
 }
 export default images

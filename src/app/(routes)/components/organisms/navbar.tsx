@@ -11,6 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Session } from "@supabase/auth-helpers-nextjs";
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
+import DropdownMenuProfile from "../molecules/dropdown-menu";
 
 const NavItem = [
   { id: 1, label: "Home", link: "/" },
@@ -97,17 +98,10 @@ const Navbar = () => {
                   {session.user?.email || "Guest"}
                 </h1>
 
-                <Avatar>
-                  <AvatarImage
-                    src={
-                      session.user?.user_metadata?.avatar_url ||
-                      "https://github.com/shadcn.png"
-                    }
-                  />
-                  <AvatarFallback>
-                    {session.user.email?.[0]?.toUpperCase() || "U"}
-                  </AvatarFallback>
-                </Avatar>
+                <DropdownMenuProfile
+                session={session}
+                setSession={setSession}
+                />
               </>
             ) : (
               <Link href="/authentication/signin">
