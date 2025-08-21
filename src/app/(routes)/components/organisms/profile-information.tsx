@@ -23,7 +23,7 @@ const ProfileInformation = ({ userId }: ProfileInformationProps) => {
     <div className="min-h-screen flex flex-col lg:gap-4 gap-2">
       <FigureProfile />
       <DescriptionOverview/>
-      <EducationSection/>
+      <EducationSection userId={userId}/>
       <ProjectSection/>
       {userId && <ExperienceCards userId={userId} />}
       <SkillOverview/>

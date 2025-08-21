@@ -17,7 +17,6 @@ export default function ExperienceSection({ userId }: { userId: string }) {
 
   const fetchData = async () => {
     try {
-      // Ambil profile user
       const { data: profile, error: profileError } = await supabase
         .from("profile")
         .select("*")
@@ -120,17 +119,7 @@ export default function ExperienceSection({ userId }: { userId: string }) {
               )}
               {exp.start_date && exp.end_date && (
                 <p className="text-sm text-muted-foreground">
-                  {new Date(exp.start_date).toLocaleDateString("id-ID", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                  })}{" "}
-                  -{" "}
-                  {new Date(exp.end_date).toLocaleDateString("id-ID", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                  })}
+                  {formatDate(exp.start_date)} - {exp.end_date ? formatDate(exp.end_date) : "Present"}
                 </p>
               )}
               {exp.description && (
