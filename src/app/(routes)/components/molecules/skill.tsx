@@ -1,7 +1,8 @@
 import images from "@/app/assets/list-image";
 import { Badge } from "@/components/ui/badge";
 
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Puzzle } from "lucide-react";
 
 import Image from "next/image";
 const modelSkills = [
@@ -21,10 +22,14 @@ Dengan dedikasi tinggi dan kemampuan beradaptasi, saya siap berkolaborasi untuk 
 `;
 const SkillOverview = () => {
   return (
-    <Card className="w-full lg:rounded-xl mask-clip-content shadow-none border-0 p-0 gap-0 pb-4">
-      <CardContent className="py-6">
+    <Card className="w-full lg:rounded-xl mask-clip-content shadow-none border-0  gap-4">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2 text-lg font-semibold">
+          <Puzzle className="w-5 h-5" /> Skill
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="">
         <div>
-          <h1 className="mb-6 text-sm font-semibold">Skill</h1>
           <div className="gap-2 flex flex-wrap">
             {modelSkills.map((skill, i) => (
               <Badge

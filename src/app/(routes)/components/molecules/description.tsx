@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 
-import { Card, CardContent } from "@/components/ui/card";
-
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { User } from "lucide-react";
 
 const modelDescription = `
 Saya adalah seorang model profesional dengan pengalaman di runway, editorial, dan pemotretan komersial. 
@@ -10,11 +10,17 @@ Dengan dedikasi tinggi dan kemampuan beradaptasi, saya siap berkolaborasi untuk 
 `;
 const DescriptionOverview = () => {
   return (
-    <Card className="w-full lg:rounded-xl mask-clip-content shadow-none border-0 p-0 gap-0 pb-4">
-      <CardContent className="py-6">
+    <Card className="w-full lg:rounded-xl mask-clip-content shadow-none border-0 gap-0 ">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2 text-lg font-semibold">
+          <User className="w-5 h-5" /> Education
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="py-2">
         <div>
-          <h1 className="mb-2 text-sm font-semibold">About me</h1>
-          <div className="text-xs text-neutral-700 leading-relaxed">{modelDescription}</div>
+          <div className="text-sm text-neutral-700 leading-relaxed">
+            {modelDescription}
+          </div>
         </div>
       </CardContent>
     </Card>
