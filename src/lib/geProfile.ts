@@ -3,7 +3,7 @@ import { Experience } from '@/types/experience';
 import { createClient } from '@/utils/supabase/client';
 
 export async function getUserProfile(userId: string) {
-    const supabase = createClient()  // Ambil profile
+const supabase = createClient()  
   const { data: profile, error: profileError } = await supabase
     .from('profile')
     .select('*')
