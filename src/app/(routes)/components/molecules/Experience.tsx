@@ -6,11 +6,16 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useEffect } from "react";
 import { ExperienceFormDialog } from "./experience-form-dialog";
 import useGetProfile from "@/hook/useGetProfile";
+import { useProfileContext } from "@/components/profile-povider";
 
-export default function ExperienceSection({ userId }: { userId: string }) {
-  const { profile, experiences, loading, error, refetch } = useGetProfile({
-    userId,
-  });
+export default function ExperienceSection({
+  userId,
+  isOwner,
+}: {
+  userId: string;
+  isOwner: boolean;
+}) {
+  const { profile, experiences, refetch } = useProfileContext();
 
   useEffect(() => {
     if (userId) refetch();
@@ -35,7 +40,7 @@ export default function ExperienceSection({ userId }: { userId: string }) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-md font-semibold">
           <Briefcase className="w-4 h-4" /> Experience
-          {profile?.id && (
+          {isOwner && profile?.id && (
             <ExperienceFormDialog profileId={profile?.id} onSaved={refetch} />
           )}
         </CardTitle>
@@ -79,11 +84,13 @@ export default function ExperienceSection({ userId }: { userId: string }) {
                     {exp.company || "No Company"}
                   </h3>
                 </div>
-                <ExperienceFormDialog
-                  experience={exp}
-                  profileId={profile?.id}
-                  onSaved={refetch}
-                ></ExperienceFormDialog>
+                {isOwner && profile?.id && (
+                  <ExperienceFormDialog
+                    experience={exp}
+                    profileId={profile?.id}
+                    onSaved={refetch}
+                  ></ExperienceFormDialog>
+                )}
               </div>
               {exp.location && (
                 <p className="text-sm text-muted-foreground m">

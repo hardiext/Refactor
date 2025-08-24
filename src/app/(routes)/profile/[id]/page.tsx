@@ -3,10 +3,14 @@ import { use } from "react";
 import BreadcrumbProfile from "../../components/atoms/breadcrumb-link";
 import Container from "../../components/atoms/container";
 import ProfileInformation from "../../components/organisms/profile-information";
+import { ProfileProvider } from "@/components/profile-povider";
 
-
-export default function PublicProfilePage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = use(params); 
+export default function PublicProfilePage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = use(params);
   return (
     <Container>
       <main className="mx-auto lg:px-8 overflow-hidden bg-gray-50">
@@ -15,8 +19,9 @@ export default function PublicProfilePage({ params }: { params: Promise<{ id: st
         </div>
         <article className="grid lg:grid-cols-5 grid-cols-1">
           <div className="lg:col-span-3">
-            {/* versi public */}
-            <ProfileInformation userId={id} isOwner={false} />
+            <ProfileProvider userId={id}>
+              <ProfileInformation  isOwner={false} />
+            </ProfileProvider>
           </div>
           <div className="lg:col-span-2"></div>
         </article>

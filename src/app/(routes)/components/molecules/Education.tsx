@@ -5,15 +5,16 @@ import { GraduationCap } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useEffect } from "react";
 import { EducationFormDialog } from "./education-form";
-import useGetProfile from "@/hook/useGetProfile";
+import { useProfileContext } from "@/components/profile-povider";
 
-
-export default function EducationSection({ userId }: { userId?: string }) {
-
-    const { profile, educations, loading, error, refetch } = useGetProfile({
-    userId,
-  });
-
+export default function EducationSection({
+  userId,
+  isOwner,
+}: {
+  userId?: string;
+  isOwner: boolean;
+}) {
+  const { profile, educations, refetch } = useProfileContext();
 
   useEffect(() => {
     if (userId) refetch();
@@ -34,7 +35,7 @@ export default function EducationSection({ userId }: { userId?: string }) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-md font-semibold">
           <GraduationCap className="w-4 h-4" /> Education
-          {profile?.id && (
+          {isOwner && profile && profile?.id && (
             <EducationFormDialog profileId={profile?.id} onSaved={refetch} />
           )}
         </CardTitle>
@@ -82,11 +83,13 @@ export default function EducationSection({ userId }: { userId?: string }) {
                     {edu.institution || "No Institution"}
                   </h3>
                 </div>
-                <EducationFormDialog
-                  education={edu}
-                  profileId={profile.id}
-                  onSaved={refetch}
-                />
+                {isOwner && profile && (
+                  <EducationFormDialog
+                    education={edu}
+                    profileId={profile.id}
+                    onSaved={refetch}
+                  />
+                )}
               </div>
 
               {edu.field && (
@@ -101,7 +104,9 @@ export default function EducationSection({ userId }: { userId?: string }) {
               )}
 
               {edu.description && (
-                <p className="text-sm leading-relaxed mt-2">{edu.description}</p>
+                <p className="text-sm leading-relaxed mt-2">
+                  {edu.description}
+                </p>
               )}
             </div>
           </div>

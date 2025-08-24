@@ -5,10 +5,10 @@ import { User } from "lucide-react";
 import useProfile from "@/hook/useProfile";
 import { DescriptionFormDialog } from "./dialog-description";
 import useGetProfile from "@/hook/useGetProfile";
+import { useProfileContext } from "@/components/profile-povider";
 
-export default function DescriptionOverview({ userId, isOwner }: { userId: string, isOwner: boolean }) {
-  const { profile, loading, error, refetch } = useGetProfile({ userId });
-
+export default function DescriptionOverview({ isOwner }: { userId: string, isOwner: boolean }) {
+  const { profile, refetch } = useProfileContext();
   return (
     <Card className="w-full lg:rounded-xl mask-clip-content shadow-none border-0 gap-0 ">
       <CardHeader className="flex justify-between items-center">

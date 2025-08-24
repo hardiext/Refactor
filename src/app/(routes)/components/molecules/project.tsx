@@ -9,11 +9,16 @@ import { useEffect } from "react";
 import { ExperienceFormDialog } from "./experience-form-dialog";
 import { ProjectFormDialog } from "./project-form-dialog";
 import useGetProfile from "@/hook/useGetProfile";
+import { useProfileContext } from "@/components/profile-povider";
 
-export default function ProjectSection({ userId }: { userId?: string }) {
-  const { projects, refetch, profile } = useGetProfile({
-    userId,
-  });
+export default function ProjectSection({
+  userId,
+  isOwner,
+}: {
+  userId?: string;
+  isOwner: boolean;
+}) {
+  const { profile, projects, refetch } = useProfileContext();
 
   useEffect(() => {
     if (userId) refetch();
@@ -23,7 +28,7 @@ export default function ProjectSection({ userId }: { userId?: string }) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-md font-semibold">
           <FolderGit2 className="w-4 h-4" /> Projects
-          {profile?.id && (
+          {isOwner && profile?.id && (
             <ProjectFormDialog profileId={profile?.id} onSaved={refetch} />
           )}
         </CardTitle>
@@ -60,11 +65,13 @@ export default function ProjectSection({ userId }: { userId?: string }) {
                     {proj.project_title}
                   </h3>
                 </div>
-                <ProjectFormDialog
-                  project={proj}
-                  profileId={profile?.id}
-                  onSaved={refetch}
-                ></ProjectFormDialog>
+                {isOwner && profile?.id && (
+                  <ProjectFormDialog
+                    project={proj}
+                    profileId={profile?.id}
+                    onSaved={refetch}
+                  ></ProjectFormDialog>
+                )}
               </div>
               <p className="text-sm leading-relaxed">{proj.description}</p>
 

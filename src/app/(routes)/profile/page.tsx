@@ -5,6 +5,7 @@ import Container from "../components/atoms/container";
 import ProfileInformation from "../components/organisms/profile-information";
 import { useEffect, useState } from "react";
 import { Session } from "@supabase/auth-helpers-nextjs";
+import { ProfileProvider } from "@/components/profile-povider";
 
 export default function ProfilePage() {
   const supabase = createClient();
@@ -49,7 +50,9 @@ export default function ProfilePage() {
         </div>
         <article className="grid lg:grid-cols-5 grid-cols-1">
           <div className="lg:col-span-3">
-            <ProfileInformation isOwner={true} userId={userId} />
+          <ProfileProvider userId={userId}>
+            <ProfileInformation isOwner={true}/>
+          </ProfileProvider>
           </div>
           <div className="lg:col-span-2"></div>
         </article>
