@@ -18,31 +18,34 @@ const ProfileInformation = ({
   userId?: string;
   isOwner: boolean;
 }) => {
-  const {loading, error, profile} = useProfileContext();
-
-  if (loading) {
+  const {loading: profileLoading, error, profile} = useProfileContext();
+ 
+  if (profileLoading) {
     return (
-      <div className="flex justify-center items-center min-h-[60vh]">
-        <StairStepLoader size={40} color="#ec4899" speed={1} />
+      <div className="flex justify-center items-center h-96">
+        <StairStepLoader
+          size={64}
+          color="#4A90E2"
+        />
       </div>
     );
   }
-
   if (error) {
     return (
-      <div className="flex justify-center items-center min-h-[60vh] text-red-500">
-        Error: {error}
+      <div className="text-center text-red-500">
+        Error loading profile: {error}
       </div>
     );
   }
 
   if (!profile) {
     return (
-      <div className="flex justify-center items-center min-h-[60vh] text-gray-500">
-        No profile found.
+      <div className="text-center text-gray-500">
+        Profile not found.
       </div>
     );
   }
+
   return (
     <div className="min-h-screen flex flex-col lg:gap-4 gap-2">
         <FigureProfile />

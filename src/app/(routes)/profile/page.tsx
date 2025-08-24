@@ -35,7 +35,7 @@ export default function ProfilePage() {
         .single();
 
       if (!profile) {
-        router.push("/onboarding"); // redirect ke onboarding kalau belum ada profile
+        router.push("/onboarding"); 
       }
     };
 
