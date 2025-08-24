@@ -33,8 +33,8 @@ export default function ExperienceSection({ userId }: { userId: string }) {
       }`}
     >
       <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-lg font-semibold">
-          <Briefcase className="w-5 h-5" /> Experience
+        <CardTitle className="flex items-center gap-2 text-md font-semibold">
+          <Briefcase className="w-4 h-4" /> Experience
           {profile?.id && (
             <ExperienceFormDialog profileId={profile?.id} onSaved={refetch} />
           )}

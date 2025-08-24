@@ -94,13 +94,13 @@ export function ProjectFormDialog({ project, profileId, onSaved }: Props) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <button
+      <Button
        
         onClick={() => setOpen(true)}
-        className="ml-2 shadow-none border-2 hover:shadow-lg transition"
+        className="ml-2 shadow-none hover:shadow-none hover:bg-transparent bg-white text-black border-0 transition"
       >
         {project ? <EditIcon className="w-4 h-4" /> : <Plus />}
-      </button>
+      </Button>
 
       <DialogContent className="sm:max-w-lg p-0 rounded-lg">
         <Card className="overflow-hidden rounded-lg py-0 gap-0  pt-4">
@@ -124,11 +124,12 @@ export function ProjectFormDialog({ project, profileId, onSaved }: Props) {
                   Project Title
                 </label>
                 <Input
+                  tabIndex={-1}
                   id="project-title"
                   placeholder="Project Title"
                   value={projectTitle}
                   onChange={(e) => setProjectTitle(e.target.value)}
-                  className="border-gray-100 shadow-none rounded-sm"
+                  className="border-gray-100 shadow-none rounded-sm text-xs"
                 />
               </div>
               <div>
@@ -139,11 +140,12 @@ export function ProjectFormDialog({ project, profileId, onSaved }: Props) {
                   Description
                 </label>
                 <Input
+                 tabIndex={-1}
                   id="description"
                   placeholder="Description"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="border-gray-100 shadow-none rounded-sm"
+                  className="border-gray-100 shadow-none rounded-sm text-xs"
                 />
               </div>
               <div>
@@ -154,21 +156,25 @@ export function ProjectFormDialog({ project, profileId, onSaved }: Props) {
                   Period
                 </label>
                 <Input
+                  tabIndex={-1}
                   id="period"
                   placeholder="Period"
                   value={period}
                   onChange={(e) => setPeriod(e.target.value)}
-                  className="border-gray-100 shadow-none rounded-sm"
+                  className="border-gray-100 shadow-none rounded-sm text-xs"
                 />
               </div>
               <div className="flex flex-col gap-2">
                 <label className="text-sm font-normal mv-2">Skills</label>
                 <div className="flex gap-2">
                   <Input
+                    id="new-skill"
+                     tabIndex={-1}
+
                     placeholder="Add a skill"
                     value={newSkill}
                     onChange={(e) => setNewSkill(e.target.value)}
-                    className="border-gray-100 shadow-none rounded-sm"
+                    className="border-gray-100 shadow-none rounded-sm text-xs"
                   />
                   <Button onClick={handleAddSkill}>Add</Button>
                 </div>
@@ -199,11 +205,12 @@ export function ProjectFormDialog({ project, profileId, onSaved }: Props) {
                     Logo URL
                   </label>
                   <Input
+                    tabIndex={-1}
                     id="file-url"
                     placeholder="Logo URL"
                     value={fileUrl}
                     onChange={(e) => setFileUrl(e.target.value)}
-                    className="border-gray-100 shadow-none rounded-sm"
+                    className="border-gray-100 shadow-none rounded-sm text-xs"
                   />
                 </div>
               </div>
@@ -216,11 +223,12 @@ export function ProjectFormDialog({ project, profileId, onSaved }: Props) {
                  Link (optional)
                 </label>
                 <Input
+                  tabIndex={-1}
                   id="link"
                   placeholder="Project Link"
                   value={link}
                   onChange={(e) => setLink(e.target.value)}
-                  className="border-gray-100 shadow-none rounded-sm"
+                  className="border-gray-100 shadow-none rounded-sm text-xs"
                 />
               </div>
                <div className="text-center pt-2">

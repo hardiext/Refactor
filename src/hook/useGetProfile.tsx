@@ -1,19 +1,31 @@
-import { Experience } from "@/types/experience";
+"use client";
+
+import { useEffect, useState, useCallback } from "react";
 import { createClient } from "@/utils/supabase/client";
-import { useEffect, useState } from "react";
+import { Education } from "@/types/education";
+import { Experience } from "@/types/experience";
+import { Project } from "@/types/project";
+import { Skill } from "@/types/skill";
+
 const useGetProfile = ({ userId }: { userId?: string }) => {
   const supabase = createClient();
+
   const [profile, setProfile] = useState<any>(null);
   const [experiences, setExperiences] = useState<Experience[]>([]);
+  const [educations, setEducations] = useState<Education[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [skills, setSkills] = useState<Skill[]>([]);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchProfile = async () => {
+  const fetchProfile = useCallback(async () => {
     if (!userId) return;
     setLoading(true);
     setError(null);
 
     try {
+      // --- Profile
       const { data: profileData, error: profileError } = await supabase
         .from("profile")
         .select("*")
@@ -21,9 +33,9 @@ const useGetProfile = ({ userId }: { userId?: string }) => {
         .single();
 
       if (profileError) throw profileError;
-
       setProfile(profileData);
 
+      // --- Experiences
       const { data: expData, error: expError } = await supabase
         .from("work_experience")
         .select("*")
@@ -31,25 +43,72 @@ const useGetProfile = ({ userId }: { userId?: string }) => {
         .order("start_date", { ascending: false });
 
       if (expError) throw expError;
-
       setExperiences(
         (expData || []).map((e: any) => ({
           ...e,
           logoUrl: e.logo_url,
         }))
       );
-    } catch (error) {
-      setError(error instanceof Error ? error.message : String(error));
+
+      // --- Educations
+      const { data: eduData, error: eduError } = await supabase
+        .from("education")
+        .select("*")
+        .eq("profile_id", profileData.id)
+        .order("start_date", { ascending: false });
+
+      if (eduError) throw eduError;
+      setEducations(
+        (eduData || []).map((e: any) => ({
+          ...e,
+          institution_url: e.institution_url,
+        }))
+      );
+
+      // --- Projects
+      const { data: proData, error: proError } = await supabase
+        .from("project")
+        .select("*")
+        .eq("profile_id", profileData.id);
+
+      if (proError) throw proError;
+      setProjects(
+        (proData || []).map((e: any) => ({
+          ...e,
+          file_url: e.file_url,
+        }))
+      );
+
+      // --- Skills
+      const { data: skillData, error: skillError } = await supabase
+        .from("skill")
+        .select("*")
+        .eq("profile_id", profileData.id);
+
+      if (skillError) throw skillError;
+      setSkills(skillData || []);
+    } catch (err) {
+      console.error("useGetProfile error:", err);
+      setError(err instanceof Error ? err.message : String(err));
     } finally {
       setLoading(false);
     }
-  };
+  }, [userId, supabase]);
 
   useEffect(() => {
     if (userId) fetchProfile();
-  }, [userId]);
+  }, [userId, fetchProfile]);
 
-  // 🔑 return state & function supaya bisa dipakai di komponen
-  return { profile, experiences, loading, error, refetch: fetchProfile };
+  return {
+    profile,
+    experiences,
+    educations,
+    projects,
+    skills,
+    loading,
+    error,
+    refetch: fetchProfile,
+  };
 };
+
 export default useGetProfile;

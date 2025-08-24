@@ -102,9 +102,9 @@ export function ExperienceFormDialog({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <Button
-        variant="outline"
+  
         onClick={() => setOpen(true)}
-        className="ml-2 shadow-none border-0 hover:shadow-lg transition"
+        className="ml-2 hover:shadow-none border-0 shadow-none bg-white hover:bg-white text-black transition"
       >
         {experience ? <EditIcon className="w-4 h-4" /> : <Plus />}
       </Button>
@@ -132,6 +132,7 @@ export function ExperienceFormDialog({
                   Company
                 </label>
                 <Input
+                 tabIndex={-1 }
                   id="company"
                   placeholder="Company"
                   value={company}
@@ -147,6 +148,7 @@ export function ExperienceFormDialog({
                   Role
                 </label>
                 <Input
+                  tabIndex={-1}
                   id="role"
                   placeholder="Role"
                   value={role}
@@ -162,6 +164,7 @@ export function ExperienceFormDialog({
                   Period
                 </label>
                 <Input
+                  tabIndex={-1}
                   id="period"
                   placeholder="Period"
                   value={period}
@@ -177,6 +180,7 @@ export function ExperienceFormDialog({
                   Start Date
                 </label>
                 <Input
+                  tabIndex={-1}
                   id="start-date"
                   type="date"
                   value={startDate}
@@ -192,6 +196,7 @@ export function ExperienceFormDialog({
                   End Date
                 </label>
                 <Input
+                  tabIndex={-1}
                   id="end-date"
                   type="date"
                   value={endDate}
@@ -207,6 +212,7 @@ export function ExperienceFormDialog({
                   Location
                 </label>
                 <Input
+                  tabIndex={-1}
                   id="location"
                   placeholder="Location"
                   value={location}
@@ -223,6 +229,7 @@ export function ExperienceFormDialog({
                     Logo URL
                   </label>
                   <Input
+                    tabIndex={-1}
                     id="logo-url"
                     placeholder="Logo URL"
                     value={logoUrl}
@@ -239,6 +246,7 @@ export function ExperienceFormDialog({
                   Description
                 </label>
                 <Input
+                  tabIndex={-1}
                   id="description"
                   placeholder="Description"
                   value={description}
@@ -254,6 +262,8 @@ export function ExperienceFormDialog({
                   Logo Url
                 </label>
                 <Input
+                  tabIndex={-1}
+                  id="logoUrl"
                   placeholder="Logo URL"
                   value={logoUrl}
                   onChange={(e) => setLogoUrl(e.target.value)}
@@ -264,6 +274,8 @@ export function ExperienceFormDialog({
                 <label className="text-sm font-normal mv-2">Skills</label>
                 <div className="flex gap-2">
                   <Input
+                    id="new-skill"
+                     tabIndex={-1}
                     placeholder="Add a skill"
                     value={newSkill}
                     onChange={(e) => setNewSkill(e.target.value)}

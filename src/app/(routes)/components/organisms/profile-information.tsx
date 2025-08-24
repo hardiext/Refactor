@@ -14,15 +14,15 @@ import EducationSection from "../molecules/Education";
 import ProjectSection from "../molecules/project";
 import CertificateSection from "../molecules/certificate";
 
-const ProfileInformation = ({ userId }: { userId?: string }) => {
+const ProfileInformation = ({ userId, isOwner }: { userId?: string, isOwner: boolean }) => {
   return (
     <div className="min-h-screen flex flex-col lg:gap-4 gap-2">
       <FigureProfile />
-      <DescriptionOverview userId={userId ?? ""} />
+      <DescriptionOverview isOwner={isOwner} userId={userId ?? ""} />
       <EducationSection userId={userId} />
       <ProjectSection userId={userId}/>
       {userId && <ExperienceCards userId={userId} />}
-      <SkillOverview />
+      <SkillOverview userId={userId} />
       <CertificateSection />
     </div>
   );

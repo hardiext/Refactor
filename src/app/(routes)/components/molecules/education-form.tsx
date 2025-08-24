@@ -85,9 +85,9 @@ export function EducationFormDialog({ education, profileId, onSaved }: Props) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <Button
-        variant="outline"
+      
         onClick={() => setOpen(true)}
-        className="ml-2 shadow-none border-0 hover:shadow-lg transition"
+        className="ml-2 shadow-none hover:shadow-none bg-white hover:bg-white text-black border-0 transition"
       >
         {education ? <EditIcon className="w-4 h-4" /> : <Plus />}
       </Button>
@@ -115,11 +115,12 @@ export function EducationFormDialog({ education, profileId, onSaved }: Props) {
                   Institution
                 </label>
                 <Input
+                 tabIndex={-1}
                   id="company"
                   placeholder="Company"
                   value={instutution}
                   onChange={(e) => setInstitution(e.target.value)}
-                  className="border-gray-100 shadow-none rounded-sm"
+                  className="border-gray-100 shadow-none rounded-sm text-xs"
                 />
               </div>
               <div>
@@ -130,11 +131,12 @@ export function EducationFormDialog({ education, profileId, onSaved }: Props) {
                   Degree
                 </label>
                 <Input
+                  tabIndex={-1}
                   id="role"
                   placeholder="Role"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="border-gray-100 shadow-none rounded-sm"
+                  className="border-gray-100 shadow-none rounded-sm text-xs"
                 />
               </div>
               <div>
@@ -145,11 +147,12 @@ export function EducationFormDialog({ education, profileId, onSaved }: Props) {
                 Field of Study
                 </label>
                 <Input
+                  tabIndex={-1}
                   id="field"
                   placeholder="Field of Study"
                   value={field}
                   onChange={(e) => setField(e.target.value)}
-                  className="border-gray-100 shadow-none rounded-sm"
+                  className="border-gray-100 shadow-none rounded-sm text-xs"
                 />
               </div>
               <div>
@@ -160,11 +163,12 @@ export function EducationFormDialog({ education, profileId, onSaved }: Props) {
                   Start Date
                 </label>
                 <Input
+                  tabIndex={-1}
                   id="start-date"
                   type="date"
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
-                  className="border-gray-100 shadow-none rounded-sm"
+                  className="border-gray-100 shadow-none rounded-sm text-xs"
                 />
               </div>
               <div>
@@ -175,11 +179,12 @@ export function EducationFormDialog({ education, profileId, onSaved }: Props) {
                   End Date
                 </label>
                 <Input
+                  tabIndex={-1}
                   id="end-date"
                   type="date"
                   value={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
-                  className="border-gray-100 shadow-none rounded-sm"
+                  className="border-gray-100 shadow-none rounded-sm text-xs"
                 />
               </div>
               <div>
@@ -191,11 +196,12 @@ export function EducationFormDialog({ education, profileId, onSaved }: Props) {
                     Logo Institution
                   </label>
                   <Input
+                    tabIndex={-1}
                     id="logo-url"
                     placeholder="Logo URL"
                     value={institutionUrl}
                     onChange={(e) => setInstitutionUrl(e.target.value)}
-                    className="border-gray-100 shadow-none rounded-sm"
+                    className="border-gray-100 shadow-none rounded-sm text-xs"
                   />
                 </div>
               </div>
@@ -207,11 +213,12 @@ export function EducationFormDialog({ education, profileId, onSaved }: Props) {
                   Description
                 </label>
                 <Input
+                  tabIndex={-1}
                   id="description"
                   placeholder="Description"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="border-gray-100 shadow-none rounded-sm"
+                  className="border-gray-100 shadow-none rounded-sm text-xs"
                 />
               </div>
 

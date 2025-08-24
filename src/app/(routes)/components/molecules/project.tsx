@@ -8,9 +8,10 @@ import useGetProject from "@/hook/useGetProject";
 import { useEffect } from "react";
 import { ExperienceFormDialog } from "./experience-form-dialog";
 import { ProjectFormDialog } from "./project-form-dialog";
+import useGetProfile from "@/hook/useGetProfile";
 
 export default function ProjectSection({ userId }: { userId?: string }) {
-  const { projects, loading, error, refetch, profile } = useGetProject({
+  const { projects, refetch, profile } = useGetProfile({
     userId,
   });
 
@@ -20,14 +21,17 @@ export default function ProjectSection({ userId }: { userId?: string }) {
   return (
     <Card className="shadow-none border-0">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-lg font-semibold">
-          <FolderGit2 className="w-5 h-5" /> Projects
+        <CardTitle className="flex items-center gap-2 text-md font-semibold">
+          <FolderGit2 className="w-4 h-4" /> Projects
           {profile?.id && (
             <ProjectFormDialog profileId={profile?.id} onSaved={refetch} />
           )}
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
+        {projects.length === 0 && (
+          <p className="text-sm text-muted-foreground">No projects yet.</p>
+        )}
         {projects.map((proj) => (
           <div
             key={proj.id}

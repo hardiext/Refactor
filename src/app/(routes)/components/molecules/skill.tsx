@@ -1,48 +1,58 @@
-import images from "@/app/assets/list-image";
-import { Badge } from "@/components/ui/badge";
+"use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Puzzle } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { SkillFormDialog } from "./dialog-form-skill";
+import { useEffect, useState } from "react";
+import { createClient } from "@/utils/supabase/client";
+import useGetProfile from "@/hook/useGetProfile";
 
-import Image from "next/image";
-const modelSkills = [
-  "Runway Modeling",
-  "Print Modeling",
-  "Commercial Modeling",
-  "Editorial Modeling",
-  "Posing Techniques",
-  "Acting Skills",
-  "Brand Endorsements",
-  "Facial Expressions",
-];
-const modelDescription = `
-Saya adalah seorang model profesional dengan pengalaman di runway, editorial, dan pemotretan komersial. 
-Terampil dalam berbagai teknik posing dan ekspresi wajah, saya mampu menyesuaikan diri dengan berbagai konsep kreatif. 
-Dengan dedikasi tinggi dan kemampuan beradaptasi, saya siap berkolaborasi untuk proyek fashion, brand endorsements, dan produksi media visual lainnya.
-`;
-const SkillOverview = () => {
+type Skill = {
+  id: string;
+  name: string;
+};
+
+type Props = {
+  userId?: string;
+};
+
+export default function SkillOverview({ userId }: Props) {
+  const supabase = createClient();
+
+  const [loading, setLoading] = useState(false);
+  const { profile, refetch, skills } = useGetProfile({ userId });
+  useEffect(() => {
+    if (userId) refetch();
+  }, [userId]);
   return (
-    <Card className="w-full lg:rounded-xl mask-clip-content shadow-none border-0  gap-4">
+    <Card className="w-full lg:rounded-xl shadow-none border-0 gap-4">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-lg font-semibold">
-          <Puzzle className="w-5 h-5" /> Skill
+        <CardTitle className="flex items-center gap-2 text-md font-semibold">
+          <Puzzle className="w-4 h-4" /> Skills
+          {profile?.id && (
+            <SkillFormDialog profileId={profile?.id} onSaved={refetch} />
+          )}
         </CardTitle>
       </CardHeader>
-      <CardContent className="">
-        <div>
-          <div className="gap-2 flex flex-wrap">
-            {modelSkills.map((skill, i) => (
-              <Badge
-                key={i}
-                className="text-xs py-1.5 rounded-sm bg-white border border-gray-100 text-neutral-800"
-              >
-                {skill}
-              </Badge>
-            ))}
-          </div>
+
+      <CardContent>
+        {loading && <p className="text-sm text-muted-foreground">Loading...</p>}
+        {!loading && skills.length === 0 && (
+          <p className="text-sm text-muted-foreground">No skills yet.</p>
+        )}
+
+        <div className="flex flex-wrap gap-2 mt-2">
+          {skills.map((skill) => (
+            <Badge
+              key={skill.id}
+              className="text-xs py-1.5 rounded-sm bg-white border border-gray-100 text-neutral-800"
+            >
+              {skill.name}
+            </Badge>
+          ))}
         </div>
       </CardContent>
     </Card>
   );
-};
-export default SkillOverview;
+}
