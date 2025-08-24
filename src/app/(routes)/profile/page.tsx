@@ -6,6 +6,7 @@ import ProfileInformation from "../components/organisms/profile-information";
 import { useEffect, useState } from "react";
 import { Session } from "@supabase/auth-helpers-nextjs";
 import { ProfileProvider } from "@/components/profile-povider";
+import NoSession from "../components/organisms/no-session-display";
 
 export default function ProfilePage() {
   const supabase = createClient();
@@ -31,9 +32,7 @@ export default function ProfilePage() {
           <article className="grid lg:grid-cols-5 grid-cols-1">
             <div className="lg:col-span-3">
               <div className="min-h-screen flex flex-col lg:gap-4 gap-2">
-                <p className="text-sm text-muted-foreground">
-                  Please log in to view your profile.
-                </p>
+             <NoSession />
               </div>
             </div>
             <div className="lg:col-span-2"></div>
