@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { createClient } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
 import { Education } from "@/types/education";
 import { Experience } from "@/types/experience";
 import { Project } from "@/types/project";
@@ -9,6 +10,7 @@ import { Skill } from "@/types/skill";
 
 const useGetProfile = ({ userId }: { userId?: string }) => {
   const supabase = createClient();
+  const router = useRouter();
 
   const [profile, setProfile] = useState<any>(null);
   const [experiences, setExperiences] = useState<Experience[]>([]);
@@ -16,7 +18,7 @@ const useGetProfile = ({ userId }: { userId?: string }) => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [skills, setSkills] = useState<Skill[]>([]);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true); // start true
   const [error, setError] = useState<string | null>(null);
 
   const fetchProfile = useCallback(async () => {
@@ -25,14 +27,25 @@ const useGetProfile = ({ userId }: { userId?: string }) => {
     setError(null);
 
     try {
-      // --- Profile
+      // Ambil profile
       const { data: profileData, error: profileError } = await supabase
         .from("profile")
         .select("*")
         .eq("user_id", userId)
-        .single();
+        .maybeSingle();
+        console.log("profileData:", profileData, "profileError:", profileError);
+
+        console.log("userId passed to hook:", userId);
+
 
       if (profileError) throw profileError;
+
+      // if (!profileData) {
+      //   // redirect ke onboarding kalau belum ada profile
+      //   router.push("/onboarding");
+      //   return;
+      // }
+
       setProfile(profileData);
 
       // --- Experiences
@@ -93,7 +106,7 @@ const useGetProfile = ({ userId }: { userId?: string }) => {
     } finally {
       setLoading(false);
     }
-  }, [userId, supabase]);
+  }, [userId, supabase, router]);
 
   useEffect(() => {
     if (userId) fetchProfile();
