@@ -13,9 +13,9 @@ export async function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname
 
   // Jika user belum login → redirect ke /login
-  if (!session && !pathname.startsWith('/login')) {
+  if (!session && !pathname.startsWith('/authentication/signin')) {
     const url = req.nextUrl.clone()
-    url.pathname = '/login'
+    url.pathname = '/authentication/signin'
     return NextResponse.redirect(url)
   }
 
