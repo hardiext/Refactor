@@ -13,16 +13,17 @@ import {
 import { Session } from "@supabase/auth-helpers-nextjs";
 import Link from "next/link";
 import React from "react";
+import { createClient } from "@/utils/supabase/client";
 
 const profileMenu = [
   { type: "label", label: "My Account" },
   {
     type: "group",
     items: [
-      { label: "Profile", shortcut: "⇧⌘P", href: "/profile" }, // halaman edit profile & CV
-      { label: "My Applications", href: "/applications" }, // daftar lamaran
-      { label: "Saved Jobs", href: "/saved" }, // lowongan yang disimpan
-      { label: "Settings", shortcut: "⌘S", href: "/settings" }, // notifikasi, password, preferensi
+      { label: "Profile", shortcut: "⇧⌘P", href: "/profile" },
+      { label: "My Applications", href: "/applications" },
+      { label: "Saved Jobs", href: "/saved" },
+      { label: "Settings", shortcut: "⌘S", href: "/settings" },
     ],
   },
   { type: "separator" },
@@ -31,21 +32,29 @@ const profileMenu = [
     items: [{ label: "Help Center", href: "/help" }],
   },
   { type: "separator" },
-  { type: "item", label: "Log out", shortcut: "⇧⌘Q", href: "/logout" },
+  { type: "item", label: "Log out", shortcut: "⇧⌘Q" },
 ];
+
 interface DropdownProp {
   session: Session | null;
-  setSession: React.Dispatch<React.SetStateAction<Session | null>>; // tipe data setSession
+  setSession: React.Dispatch<React.SetStateAction<Session | null>>;
 }
 
 const DropdownMenuProfile: React.FC<DropdownProp> = ({
   session,
   setSession,
 }) => {
+  const supabase = createClient();
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setSession(null);
+    // bisa push ke halaman login juga kalau perlu
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        
         <Avatar>
           <AvatarImage
             src={
@@ -67,9 +76,24 @@ const DropdownMenuProfile: React.FC<DropdownProp> = ({
             return <DropdownMenuSeparator key={i} />;
           }
           if (menu.type === "item") {
+            // cek kalau itemnya Log out
+            if (menu.label === "Log out") {
+              return (
+                <DropdownMenuItem key={i} onClick={handleLogout}>
+                  {menu.label}
+                  {menu.shortcut && (
+                    <DropdownMenuShortcut>{menu.shortcut}</DropdownMenuShortcut>
+                  )}
+                </DropdownMenuItem>
+              );
+            }
             return (
               <DropdownMenuItem key={i}>
-                <Link href={menu.href || "#"}>{menu.label}</Link>
+                {"href" in menu ? (
+                  <Link href={menu.href || "#"}>{menu.label}</Link>
+                ) : (
+                  <span>{menu.label}</span>
+                )}
                 {menu.shortcut && (
                   <DropdownMenuShortcut>{menu.shortcut}</DropdownMenuShortcut>
                 )}
@@ -83,9 +107,7 @@ const DropdownMenuProfile: React.FC<DropdownProp> = ({
                   <DropdownMenuItem key={j}>
                     <Link href={item.href || "#"}>{item.label}</Link>
                     {item.shortcut && (
-                      <DropdownMenuShortcut>
-                        {item.shortcut}
-                      </DropdownMenuShortcut>
+                      <DropdownMenuShortcut>{item.shortcut}</DropdownMenuShortcut>
                     )}
                   </DropdownMenuItem>
                 ))}
@@ -98,4 +120,5 @@ const DropdownMenuProfile: React.FC<DropdownProp> = ({
     </DropdownMenu>
   );
 };
+
 export default DropdownMenuProfile;

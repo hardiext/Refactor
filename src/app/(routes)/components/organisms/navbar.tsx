@@ -12,6 +12,7 @@ import { Session } from "@supabase/auth-helpers-nextjs";
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import DropdownMenuProfile from "../molecules/dropdown-menu";
+import ButtonAuth from "../atoms/button-auth";
 
 const NavItem = [
   { id: 1, label: "Home", link: "/" },
@@ -51,10 +52,10 @@ const Navbar = () => {
               priority={true}
             />
             <div className="flex flex-col">
-            <span className="text-md font-semibold  text-neutral-800">
-              Kerjago
-            </span>
-            <span className="text-xs text-neutral-500">Level Up Career</span>
+              <span className="text-md font-semibold  text-neutral-800">
+                Kerjago
+              </span>
+              <span className="text-xs text-neutral-500">Level Up Career</span>
             </div>
           </div>
           <ul className="lg:flex items-center gap-x-6 hidden">
@@ -80,7 +81,6 @@ const Navbar = () => {
 
         <div className="flex items-center">
           <div className="flex items-center lg:px-6 px-0 lg:border-r border-gray-100 gap-x-4">
-            
             <Button className="relative hover:bg-gray-100 px-1 py-2 w-auto h-auto bg-white border shadow-none border-gray-200 rounded-full">
               <Bell className="text-black" />
               <div className="w-[6px] h-[6px] rounded-full bg-red-600 absolute top-2 right-2" />
@@ -99,16 +99,15 @@ const Navbar = () => {
                 </h1>
 
                 <DropdownMenuProfile
-                session={session}
-                setSession={setSession}
+                  session={session}
+                  setSession={setSession}
                 />
               </>
             ) : (
-              <Link href="/authentication/signin">
-               <div className="text-sm font-medium rounded-full px-4 h-8 bg-gradient-to-br from-pink-500 to-red-500 text-white">
-                Get Started
-               </div>
-              </Link>
+              <div className="space-x-2 flex items-center">
+                <ButtonAuth type="login" href="/authentication/signin" />
+                <ButtonAuth type="signup" href="/authentication/signup" />
+              </div>
             )}
           </div>
         </div>
