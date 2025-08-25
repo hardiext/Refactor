@@ -13,7 +13,8 @@ const nextConfig: NextConfig = {
       "pluspng.com",
       "logospng.org",
       "www.pngarts.com",
-      "upload.wikimedia.org"
+      "upload.wikimedia.org",
+      "aqgvzkgzdioyjybiuzyr.supabase.co"
     ]
   }
 };

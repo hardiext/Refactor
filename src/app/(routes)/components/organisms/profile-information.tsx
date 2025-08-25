@@ -30,13 +30,7 @@ const ProfileInformation = ({
       </div>
     );
   }
-  if (error) {
-    return (
-      <div className="text-center text-red-500">
-        Error loading profile: {error}
-      </div>
-    );
-  }
+
 
   if (!profile) {
     return (
@@ -48,7 +42,7 @@ const ProfileInformation = ({
 
   return (
     <div className="min-h-screen flex flex-col lg:gap-4 gap-2">
-        <FigureProfile />
+        <FigureProfile isOwner={isOwner} userId={userId ?? ""} />
         <DescriptionOverview isOwner={isOwner} userId={userId ?? ""} />
         <EducationSection userId={userId} isOwner={isOwner} />
         <ProjectSection userId={userId} isOwner={isOwner} />

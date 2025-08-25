@@ -69,7 +69,7 @@ export default function ProfilePage() {
 
   return (
     <Container>
-      <main className=" mx-auto lg:px-8 overflow-hidden bg-gray-50">
+      <main className=" mx-auto lg:px-8 overflow-hidden bg-gray-50 pb-12">
         <div className="py-4 px-4 lg:bg-transparent bg-white">
           <BreadcrumbProfile />
         </div>

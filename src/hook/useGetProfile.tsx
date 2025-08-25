@@ -101,7 +101,7 @@ const useGetProfile = ({ userId }: { userId?: string }) => {
       if (skillError) throw skillError;
       setSkills(skillData || []);
     } catch (err) {
-      console.error("useGetProfile error:", err);
+      console.log("Error fetching profile data:", err);
       setError(err instanceof Error ? err.message : String(err));
     } finally {
       setLoading(false);

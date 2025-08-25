@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 
 export default function ConditionalBottomNav() {
   const pathname = usePathname();
-  const noNavbarPaths = ["/profile", "/authentication/signin", " /authentication/signin" ];
+  const noNavbarPaths = [ "/authentication/signin", " /authentication/signup", "/onboarding" ];
 
   if (noNavbarPaths.includes(pathname)) {
     return null;
