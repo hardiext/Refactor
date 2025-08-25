@@ -42,26 +42,21 @@ export default function Home() {
   const { jobs } = useJobs(filters);
   const router = useRouter();
   const { loading, profileExists } = useProfileCheck();
-  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
-  }, []);
-  useEffect(() => {
-    if (isClient && !loading && !profileExists) {
+    if ( !profileExists) {
       router.push("/onboarding");
     }
-  }, [loading, profileExists, isClient, router]);
+  }, [loading, profileExists, router]);
 
-
-  if (!isClient || loading) {
+  if (loading)
     return (
-      <div className="flex justify-center items-center h-screen">
-        <StairStepLoader size={64} color="#4A90E2" />
+      <div>
+        <div className="flex justify-center items-center h-96">
+          <StairStepLoader size={64} color="#4A90E2" />
+        </div>
       </div>
     );
-  }
-
   if (!profileExists) return null;
   return (
     <Container>
