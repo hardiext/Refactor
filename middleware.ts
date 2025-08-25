@@ -12,14 +12,12 @@ export async function middleware(req: NextRequest) {
 
   const pathname = req.nextUrl.pathname
 
-  // Jika user belum login → redirect ke /login
-  if (!session && !pathname.startsWith('/authentication/signin')) {
+  if (!session && !pathname.startsWith('/authentication/signn')) {
     const url = req.nextUrl.clone()
-    url.pathname = '/authentication/signin'
+    url.pathname = '/authentication/sigin'
     return NextResponse.redirect(url)
   }
 
-  // Jika user login dan akses selain /onboarding
   if (session && pathname !== '/onboarding' && pathname !== '/logout') {
     // Cek apakah profil user sudah ada
     const { data: profile } = await supabase

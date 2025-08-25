@@ -41,14 +41,16 @@ export default function Home() {
   };
   const { jobs } = useJobs(filters);
   const router = useRouter();
-  const { loading, profileExists } = useProfileCheck();
-
-  useEffect(() => {
-    if ( !profileExists) {
+  const { loading, profileExists, user } = useProfileCheck();
+useEffect(() => {
+  if (!loading && user && !profileExists) {
+    const timer = setTimeout(() => {
       router.push("/onboarding");
-    }
-  }, [loading, profileExists, router]);
+    }, 200); 
 
+    return () => clearTimeout(timer);
+  }
+}, [loading, profileExists, user, router]);
   if (loading)
     return (
       <div>
@@ -57,7 +59,7 @@ export default function Home() {
         </div>
       </div>
     );
-  if (!profileExists) return null;
+  
   return (
     <Container>
       <main className="w-full overflow-hidden">

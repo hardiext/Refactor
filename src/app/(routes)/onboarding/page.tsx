@@ -31,8 +31,6 @@ export default function OnboardingPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [step, setStep] = useState(1);
-
-
   
   useEffect(() => {
     const getUser = async () => {
