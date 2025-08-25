@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import { ProfileProvider } from "@/components/profile-povider";
 import NoSession from "../components/organisms/no-session-display";
 import { useRouter } from "next/navigation";
+import { useProfileCheck } from "@/hook/useProfileChect";
+import { StairStepLoader } from "react-loaderkit";
 
 export default function ProfilePage() {
   const supabase = createClient();
@@ -14,6 +16,7 @@ export default function ProfilePage() {
 
   const [userId, setUserId] = useState<string | undefined>(undefined);
   const [hasMounted, setHasMounted] = useState(false);
+  const { loading, profileExists } = useProfileCheck();
 
   useEffect(() => {
     setHasMounted(true);
@@ -24,23 +27,23 @@ export default function ProfilePage() {
     getSession();
   }, []);
 
+
   useEffect(() => {
     if (!userId) return;
+    if (!loading && !profileExists) {
+      router.push("/onboarding");
+    }
+  }, [loading, profileExists, router]);
 
-    const checkProfile = async () => {
-      const { data: profile } = await supabase
-        .from("profile")
-        .select("*")
-        .eq("user_id", userId)
-        .single();
-
-      if (!profile) {
-        router.push("/onboarding"); 
-      }
-    };
-
-    checkProfile();
-  }, [userId, router]);
+  if (loading)
+    return (
+      <div>
+        <div className="flex justify-center items-center h-96">
+          <StairStepLoader size={64} color="#4A90E2" />
+        </div>
+      </div>
+    );
+  if (!profileExists) return null;
 
   if (!hasMounted) return null;
 

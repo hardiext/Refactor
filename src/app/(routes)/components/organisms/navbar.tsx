@@ -105,9 +105,9 @@ const Navbar = () => {
               </>
             ) : (
               <Link href="/authentication/signin">
-                <Button className="text-sm font-medium rounded-full px-4 h-8 bg-gradient-to-br from-pink-500 to-red-500 text-white">
-                  Get Started
-                </Button>
+               <div className="text-sm font-medium rounded-full px-4 h-8 bg-gradient-to-br from-pink-500 to-red-500 text-white">
+                Get Started
+               </div>
               </Link>
             )}
           </div>

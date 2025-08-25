@@ -9,6 +9,7 @@ import resume from './resume-blog.jpeg'
 import fallback from './fallback.png'
 import tumbnail from './tumbnail_profile.jpg'
 import exampePoto from './example-1.jpg'
+import onboarding from './onboarding.jpg'
 const images = {
     logo,
     meta,
@@ -20,6 +21,7 @@ const images = {
     resume,
     fallback,
     tumbnail,
-    exampePoto
+    exampePoto,
+    onboarding
 }
 export default images

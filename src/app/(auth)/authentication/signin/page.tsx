@@ -6,7 +6,6 @@ const SignForm = dynamic(() => import("../../components/organism/signin-form"), 
 const SignIn = () => {
   return (
     <div className="flex flex-col min-h-screen md:grid md:grid-cols-5">
-      {/* Section Video */}
       <div className="h-[200px] md:h-auto md:col-span-3 relative overflow-hidden">
         <video
           className="absolute inset-0 w-full h-full object-cover brightness-50"

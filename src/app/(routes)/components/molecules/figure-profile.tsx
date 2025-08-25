@@ -1,20 +1,13 @@
 import images from "@/app/assets/list-image";
+import { useProfileContext } from "@/components/profile-povider";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Fish, MoreVertical } from "lucide-react";
 import Image from "next/image";
-const modelSkills = [
-  "Runway Modeling",
-  "Print Modeling",
-  "Commercial Modeling",
-  "Editorial Modeling",
-  "Posing Techniques",
-  "Acting Skills",
-  "Brand Endorsements",
-  "Facial Expressions"
-];
-const FigureProfile = () => {
+
+export default function FigureProfile () {
+    const { profile } = useProfileContext();
   return (
     <Card className="w-full lg:rounded-xl mask-clip-content shadow-none border-0 p-0 gap-0 pb-4">
       <CardHeader className="p-0">
@@ -40,7 +33,7 @@ const FigureProfile = () => {
         </div>
         <div className="px-4 py-1">
           <div className="">
-            <h1 className="text-md font-bold">Go Youn-jung</h1>
+            <h1 className="text-md font-bold">{profile.full_name}</h1>
           </div>
           <div className="mt-2 flex items-center space-x-2">
             <Image
@@ -52,14 +45,14 @@ const FigureProfile = () => {
             />
             <div>
               <span className="text-sm text-neutral-600">
-                Soul, South Korea
+                {profile?.country}, {profile?.city}
               </span>
             </div>
           </div>
           <div className="mt-2">
             <ul className="flex items-center  list-disc gap-6">
               <li className=" marker:text-white  text-xs font-medium">
-                @gyounjung
+                @{profile.username}
               </li>
               <li className="text-xs font-medium marker:text-[10px] marker:text-gray-500">Artist and Model</li>
               <li className="text-xs font-medium marker:text-[10px] text-gray-500">Open to Work</li>
@@ -74,4 +67,4 @@ const FigureProfile = () => {
     </Card>
   );
 };
-export default FigureProfile;
+

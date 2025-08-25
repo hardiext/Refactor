@@ -1,11 +1,14 @@
 "use client";
 
 import useJobs, { FilterOptions } from "@/hook/usejob";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Container from "./components/atoms/container";
 
 import dynamic from "next/dynamic";
 import Footer from "./components/organisms/footes";
+import { useRouter } from "next/navigation";
+import { useProfileCheck } from "@/hook/useProfileChect";
+import { StairStepLoader } from "react-loaderkit";
 
 const HeroSection = dynamic(() => import("./components/organisms/hero"), {
   ssr: false,
@@ -14,7 +17,10 @@ const CardJobList = dynamic(() => import("./components/organisms/job-list"), {
   ssr: false,
 });
 
-const InformationData = dynamic(()=> import("./components/organisms/inforamtion-data"),{ssr: false})
+const InformationData = dynamic(
+  () => import("./components/organisms/inforamtion-data"),
+  { ssr: false }
+);
 
 const PopularJobCategories = dynamic(
   () => import("./components/organisms/popular-categories")
@@ -34,7 +40,24 @@ export default function Home() {
     setFilters((prev) => ({ ...prev, ...newFilters }));
   };
   const { jobs } = useJobs(filters);
+  const router = useRouter();
+  const { loading, profileExists } = useProfileCheck();
 
+  useEffect(() => {
+    if (!loading && !profileExists) {
+      router.push("/onboarding");
+    }
+  }, [loading, profileExists, router]);
+
+  if (loading)
+    return (
+      <div>
+        <div className="flex justify-center items-center h-96">
+          <StairStepLoader size={64} color="#4A90E2" />
+        </div>
+      </div>
+    );
+  if (!profileExists) return null;
   return (
     <Container>
       <main className="w-full overflow-hidden">
@@ -56,10 +79,10 @@ export default function Home() {
           <KerjaBlog />
         </div>
         <div>
-          <InformationData/>
+          <InformationData />
         </div>
       </main>
-      <Footer/>
+      <Footer />
     </Container>
   );
 }

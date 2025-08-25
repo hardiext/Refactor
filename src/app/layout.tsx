@@ -35,7 +35,6 @@ export default function RootLayout({
         <ConditionalNavbar/>
         {children}
         <ConditionalBottomNav/>
-
       </body>
     </html>
   );
