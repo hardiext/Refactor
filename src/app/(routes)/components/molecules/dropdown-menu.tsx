@@ -28,7 +28,7 @@ const profileMenu = [
   { type: "separator" },
   {
     type: "group",
-    items: [{ label: "Help Center", href: "/help" }], // bantuan / FAQ
+    items: [{ label: "Help Center", href: "/help" }],
   },
   { type: "separator" },
   { type: "item", label: "Log out", shortcut: "⇧⌘Q", href: "/logout" },
