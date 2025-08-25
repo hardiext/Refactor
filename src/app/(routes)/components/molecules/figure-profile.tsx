@@ -81,10 +81,8 @@ export default function FigureProfile({
               <li className="text-xs font-medium marker:text-[10px] marker:text-gray-500">
                 {profile?.professional_title}
               </li>
-              <li className="text-xs font-medium marker:text-[10px] ">
-                {profile?.bio}
-              </li>
             </ul>
+            <span className="text-xs ">{profile?.bio}</span>
           </div>
           <div className="flex items-center mt-4 space-x-2">
             <Button className="text-xs px-2 h-8 rounded-sm bg-white shadow-none border border-gray-100 text-neutral-600">
