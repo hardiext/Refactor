@@ -9,6 +9,7 @@ import NoSession from "../components/organisms/no-session-display";
 import { useRouter } from "next/navigation";
 import { useProfileCheck } from "@/hook/useProfileChect";
 import { StairStepLoader } from "react-loaderkit";
+import RequireLogin from "../components/organisms/require-login";
 
 export default function ProfilePage() {
   const supabase = createClient();
@@ -43,26 +44,14 @@ export default function ProfilePage() {
         </div>
       </div>
     );
-  if (!profileExists) return null;
+ 
 
   if (!hasMounted) return null;
 
   if (!userId) {
     return (
       <Container>
-        <main className=" mx-auto lg:px-8 overflow-hidden bg-gray-50">
-          <div className="py-4 px-4 lg:bg-transparent bg-white">
-            <BreadcrumbProfile />
-          </div>
-          <article className="grid lg:grid-cols-5 grid-cols-1">
-            <div className="lg:col-span-3">
-              <div className="min-h-screen flex flex-col lg:gap-4 gap-2">
-                <NoSession />
-              </div>
-            </div>
-            <div className="lg:col-span-2"></div>
-          </article>
-        </main>
+       <RequireLogin/>
       </Container>
     );
   }
