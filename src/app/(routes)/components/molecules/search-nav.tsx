@@ -1,16 +1,13 @@
-"use client"
+"use client";
 
 import React, {
   useState,
-  useEffect,
-  useCallback,
-  useImperativeHandle,
   forwardRef,
-} from "react"
-import { usePathname, useSearchParams, useRouter } from "next/navigation"
-import debounce from "lodash.debounce"
+  useImperativeHandle,
+} from "react";
+import { usePathname, useRouter } from "next/navigation";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -18,121 +15,108 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 
-import SearchInput from "../atoms/search-input"
-import LocationInput from "../atoms/location-input"
-import JobTypeSelect from "../atoms/job-type-select"
-import SalaryRangeSelect from "../atoms/salary-range-select"
+import SearchInput from "../atoms/search-input";
+import LocationInput from "../atoms/location-input";
+import JobTypeSelect from "../atoms/job-type-select";
+import SalaryRangeSelect from "../atoms/salary-range-select";
+import useSearchSuggestions from "@/hook/useSugesstionSearch";
 
 interface SearchNavProps {
   onSearchChange: (filters: {
-    searchText: string
-    location: string
-    jobType: string
-    salaryRange: string
-  }) => void
+    searchText: string;
+    location: string;
+    jobType: string;
+    salaryRange: string;
+  }) => void;
 }
 
 export interface SearchNavRef {
-  triggerSearch: () => void
+  triggerSearch: () => void;
 }
 
 const SearchNav = forwardRef<SearchNavRef, SearchNavProps>(
   ({ onSearchChange }, ref) => {
-    const searchParams = useSearchParams()
-    const pathname = usePathname()
-    const router = useRouter()
+    const pathname = usePathname();
+    const router = useRouter();
 
-    const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false)
+    const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
-    const [searchText, setSearchText] = useState("")
-    const [location, setLocation] = useState("")
-    const [jobType, setJobType] = useState("")
-    const [salaryRange, setSalaryRange] = useState("")
+    // state utama
+    const [searchTextInput, setSearchTextInput] = useState("");
+    const [searchTextApplied, setSearchTextApplied] = useState("");
+    const [location, setLocation] = useState("");
+    const [jobType, setJobType] = useState("");
+    const [salaryRange, setSalaryRange] = useState("");
 
-    // ✅ Sync state from URL on load or manual entry
-    useEffect(() => {
-      const s = searchParams.get("searchText") || ""
-      const l = searchParams.get("location") || ""
-      const j = searchParams.get("jobType") || ""
-      const sr = searchParams.get("salaryRange") || ""
+    // ambil suggestion berdasarkan input
+    const { results: suggestions } = useSearchSuggestions(searchTextInput);
 
-      setSearchText((prev) => (prev !== s ? s : prev))
-      setLocation((prev) => (prev !== l ? l : prev))
-      setJobType((prev) => (prev !== j ? j : prev))
-      setSalaryRange((prev) => (prev !== sr ? sr : prev))
+    const applySearch = (val: string) => {
+      setSearchTextApplied(val);
 
-      onSearchChange({ searchText: s, location: l, jobType: j, salaryRange: sr })
-    }, [searchParams, onSearchChange])
+      onSearchChange({
+        searchText: val,
+        location,
+        jobType,
+        salaryRange,
+      });
 
-    // ✅ Debounced update to URL and call to onSearchChange
-    const debouncedSearchChange = useCallback(
-      debounce((filters: any) => {
-        onSearchChange(filters)
+      const params = new URLSearchParams();
+      if (val) params.set("searchText", val);
+      if (location) params.set("location", location);
+      if (jobType) params.set("jobType", jobType);
+      if (salaryRange) params.set("salaryRange", salaryRange);
 
-        const params = new URLSearchParams()
-        if (filters.searchText) params.set("searchText", filters.searchText)
-        if (filters.location) params.set("location", filters.location)
-        if (filters.jobType) params.set("jobType", filters.jobType)
-        if (filters.salaryRange) params.set("salaryRange", filters.salaryRange)
+      router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    };
 
-        router.push(`${pathname}?${params.toString()}`, { scroll: false })
-      }, 300),
-      [onSearchChange, pathname, router]
-    )
-
-    // ✅ Call debounced search on input changes
-    useEffect(() => {
-      debouncedSearchChange({ searchText, location, jobType, salaryRange })
-    }, [searchText, location, jobType, salaryRange, debouncedSearchChange])
-
-    // ✅ Manual trigger (flush debounce immediately)
     const triggerSearch = () => {
-      debouncedSearchChange.flush()
-    }
+      applySearch(searchTextInput);
+    };
 
-    useImperativeHandle(ref, () => ({ triggerSearch }))
+    useImperativeHandle(ref, () => ({ triggerSearch }));
 
-    const clearSearch = () => setSearchText("")
+    const clearSearch = () => setSearchTextInput("");
 
     return (
       <>
         {/* Desktop Layout */}
         <div className="w-full hidden md:grid grid-cols-4 gap-6">
           <SearchInput
-            value={searchText}
-            onChange={setSearchText}
+            value={searchTextInput}
+            onChange={setSearchTextInput}
             onEnter={triggerSearch}
             onClear={clearSearch}
+            suggestions={suggestions}
+            onSuggestionClick={(s) => applySearch(s.label)}
           />
           <LocationInput
             value={location}
             onChange={setLocation}
             onEnter={triggerSearch}
           />
-          <JobTypeSelect
-            value={jobType}
-            onChange={setJobType}
-          />
-          <SalaryRangeSelect
-            value={salaryRange}
-            onChange={setSalaryRange}
-          />
+          <JobTypeSelect value={jobType} onChange={setJobType} />
+          <SalaryRangeSelect value={salaryRange} onChange={setSalaryRange} />
         </div>
 
-        {/* Mobile Layout */}
         <div className="w-full flex items-center gap-4 md:hidden">
           <div className="flex-1 relative">
             <SearchInput
-              value={searchText}
-              onChange={setSearchText}
+              value={searchTextInput}
+              onChange={setSearchTextInput}
               onEnter={triggerSearch}
               onClear={clearSearch}
+              suggestions={suggestions}
+              onSuggestionClick={(s) => applySearch(s.label)}
             />
           </div>
 
-          <Dialog open={isMobileFilterOpen} onOpenChange={setIsMobileFilterOpen}>
+          <Dialog
+            open={isMobileFilterOpen}
+            onOpenChange={setIsMobileFilterOpen}
+          >
             <DialogTrigger asChild>
               <Button className="text-sm py-2 bg-purple-600 text-white rounded-md">
                 Filter
@@ -152,10 +136,7 @@ const SearchNav = forwardRef<SearchNavRef, SearchNavProps>(
                   onChange={setLocation}
                   onEnter={triggerSearch}
                 />
-                <JobTypeSelect
-                  value={jobType}
-                  onChange={setJobType}
-                />
+                <JobTypeSelect value={jobType} onChange={setJobType} />
                 <SalaryRangeSelect
                   value={salaryRange}
                   onChange={setSalaryRange}
@@ -166,9 +147,9 @@ const SearchNav = forwardRef<SearchNavRef, SearchNavProps>(
                 <button
                   className="px-4 py-2 text-sm rounded border border-gray-300 hover:bg-gray-100 transition"
                   onClick={() => {
-                    setLocation("")
-                    setJobType("")
-                    setSalaryRange("")
+                    setLocation("");
+                    setJobType("");
+                    setSalaryRange("");
                   }}
                 >
                   Reset
@@ -176,8 +157,8 @@ const SearchNav = forwardRef<SearchNavRef, SearchNavProps>(
                 <DialogTrigger asChild>
                   <button
                     onClick={() => {
-                      triggerSearch()
-                      setIsMobileFilterOpen(false)
+                      triggerSearch();
+                      setIsMobileFilterOpen(false);
                     }}
                     className="bg-purple-600 text-white px-4 py-2 text-sm rounded"
                   >
@@ -189,9 +170,9 @@ const SearchNav = forwardRef<SearchNavRef, SearchNavProps>(
           </Dialog>
         </div>
       </>
-    )
+    );
   }
-)
+);
 
-SearchNav.displayName = "SearchNav"
-export default SearchNav
+SearchNav.displayName = "SearchNav";
+export default SearchNav;

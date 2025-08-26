@@ -41,7 +41,6 @@ const HeroSection: React.FC<SearchNavProps> = ({ onSearchChange }) => {
   return (
     <section className="lg:min-h-[625px] grid grid-cols-1">
       <div className="lg:h-[625px] h-auto col-span-1 relative max-w-screen">
-        {/* Background: Image dulu, lalu ganti ke video */}
         {!showVideo ? (
           <img
             src="/video/poster.webp"

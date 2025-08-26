@@ -28,7 +28,6 @@ const SearchNav = forwardRef<SearchNavRef, SearchNavProps>(({ onSearchChange }, 
 
       const params = new URLSearchParams();
       if (filters.searchText) params.set("searchText", filters.searchText);
-      // Kalau ada filters lain, bisa ditambahkan ke URL params juga
 
       router.replace(`explore?${params.toString()}`, { scroll: false });
     }, 300),
