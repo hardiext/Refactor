@@ -85,8 +85,8 @@ const SearchNav = forwardRef<SearchNavRef, SearchNavProps>(
             onChange={setSearchTextInput}
             onEnter={triggerSearch}
             onClear={clearSearch}
-            suggestions={suggestions} // wajib
-            onSuggestionClick={(s) => applySearch(s.label)} // wajib
+            suggestions={suggestions}
+            onSuggestionClick={(s) => applySearch(s.label)}
           />
           <LocationInput
             value={location}
@@ -97,6 +97,7 @@ const SearchNav = forwardRef<SearchNavRef, SearchNavProps>(
           <SalaryRangeSelect value={salaryRange} onChange={setSalaryRange} />
         </div>
 
+        {/* Mobile Layout */}
         <div className="w-full flex items-center gap-4 md:hidden">
           <div className="flex-1 relative">
             <SearchInput
@@ -104,8 +105,8 @@ const SearchNav = forwardRef<SearchNavRef, SearchNavProps>(
               onChange={setSearchTextInput}
               onEnter={triggerSearch}
               onClear={clearSearch}
-              suggestions={suggestions} // wajib
-              onSuggestionClick={(s) => applySearch(s.label)} // wajib
+              suggestions={suggestions}
+              onSuggestionClick={(s) => applySearch(s.label)}
             />
           </div>
 
