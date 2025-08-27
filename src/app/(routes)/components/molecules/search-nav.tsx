@@ -1,10 +1,6 @@
 "use client";
 
-import React, {
-  useState,
-  forwardRef,
-  useImperativeHandle,
-} from "react";
+import React, { useState, forwardRef, useImperativeHandle } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
@@ -89,8 +85,8 @@ const SearchNav = forwardRef<SearchNavRef, SearchNavProps>(
             onChange={setSearchTextInput}
             onEnter={triggerSearch}
             onClear={clearSearch}
-            suggestions={suggestions}
-            onSuggestionClick={(s) => applySearch(s.label)}
+            suggestions={suggestions} // wajib
+            onSuggestionClick={(s) => applySearch(s.label)} // wajib
           />
           <LocationInput
             value={location}
@@ -108,8 +104,8 @@ const SearchNav = forwardRef<SearchNavRef, SearchNavProps>(
               onChange={setSearchTextInput}
               onEnter={triggerSearch}
               onClear={clearSearch}
-              suggestions={suggestions}
-              onSuggestionClick={(s) => applySearch(s.label)}
+              suggestions={suggestions} // wajib
+              onSuggestionClick={(s) => applySearch(s.label)} // wajib
             />
           </div>
 
