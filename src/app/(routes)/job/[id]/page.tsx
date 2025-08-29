@@ -22,7 +22,6 @@ const JobPageDetail = () => {
   const { job, loading: jobLoading } = useJobDetail(jobId);
   const { jobs, loading: jobsLoading, observerRef, error } = useJobs2();
 
-  // Gabungkan state loading dari kedua hook
   const isLoading = jobLoading || jobsLoading;
 
    const [showLoader, setShowLoader] = useState(true);

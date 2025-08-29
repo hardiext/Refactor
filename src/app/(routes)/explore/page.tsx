@@ -5,6 +5,7 @@ import ExploreNav from "../components/organisms/explore-nav";
 import { useSearchParams } from "next/navigation";
 import useJobs, { FilterOptions } from "@/hook/usejob";
 import dynamic from "next/dynamic";
+import useGetRole from "@/hook/useRole";
 
 const FilterAside = dynamic(() => import("../components/organisms/filter-aside"), { ssr: false });
 const CardJobList = dynamic(() => import("../components/organisms/job-list"), { ssr: false });
@@ -34,6 +35,7 @@ const ExploreContent = () => {
   }, [searchParams]);
 
   const { jobs, loading, error } = useJobs(filters);
+
 
   return (
     <>

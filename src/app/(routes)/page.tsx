@@ -1,90 +1,53 @@
 "use client";
 
-import useJobs, { FilterOptions } from "@/hook/usejob";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Container from "./components/atoms/container";
-
-import dynamic from "next/dynamic";
 import Footer from "./components/organisms/footes";
 import { useRouter } from "next/navigation";
 import { useProfileCheck } from "@/hook/useProfileChect";
-import { StairStepLoader } from "react-loaderkit";
+import useGetRole from "@/hook/useRole";
+import JobSeekerContent from "./components/jobseeker/organisms/jobseeker-content";
+import Loading from "./components/atoms/loading";
+import { AppSidebar } from "./components/employer/organisms/sidebar";
+import MainContent from "./components/employer/organisms/main-content";
 
-const HeroSection = dynamic(() => import("./components/organisms/hero"), {
-  ssr: false,
-});
-const CardJobList = dynamic(() => import("./components/organisms/job-list"), {
-  ssr: false,
-});
-
-const InformationData = dynamic(
-  () => import("./components/organisms/inforamtion-data"),
-  { ssr: false }
-);
-
-const PopularJobCategories = dynamic(
-  () => import("./components/organisms/popular-categories")
-);
-
-const KerjaBlog = dynamic(() => import("./components/organisms/blog"));
-
-export default function Home() {
-  const [filters, setFilters] = useState<FilterOptions>({
-    searchText: "",
-    location: "",
-    jobType: "",
-    salaryRange: "",
-  });
-
-  const handleSearchChange = (newFilters: Partial<FilterOptions>) => {
-    setFilters((prev) => ({ ...prev, ...newFilters }));
-  };
-  const { jobs } = useJobs(filters);
+const Home = () => {
+  const { role } = useGetRole();
   const router = useRouter();
   const { loading, profileExists, user } = useProfileCheck();
-useEffect(() => {
-  if (!loading && user && !profileExists) {
-    const timer = setTimeout(() => {
-      router.push("/onboarding");
-    }, 200); 
+  const [menu, setMenu] = useState("home");
+ 
+  useEffect(() => {
+    if (!loading && user && !profileExists && role) {
+      router.replace("/onboarding");
+    }
+  }, [loading, profileExists, user, role, router]);
 
-    return () => clearTimeout(timer);
+
+  if (loading) {
+    return <Loading />;
   }
-}, [loading, profileExists, user, router]);
-  if (loading)
-    return (
-      <div>
-        <div className="flex justify-center items-center h-96">
-          <StairStepLoader size={64} color="#4A90E2" />
-        </div>
-      </div>
-    );
-  
   return (
     <Container>
-      <main className="w-full overflow-hidden">
+      {role === "employer" ? (
+        <div className="flex items-center">
+          <AppSidebar setMenu={setMenu} activeMenu={menu}/>
+          <MainContent menu={menu} />
+        </div>
+      ) : (
         <div>
-          <HeroSection onSearchChange={handleSearchChange} />
+          <JobSeekerContent />
         </div>
-        <div className="lg:py-8 py-4 lg:px-8 px-4">
-          <h1 className="text-2xl font-semibold mb-6 ">
-            <span className="bg-gradient-to-br from-pink-600 via-pink-600 to-red-600 bg-clip-text text-transparent">
-              Explore 1000+ Job Opportunities Worldwide
-            </span>
-          </h1>
-          <CardJobList jobs={jobs} />
-        </div>
-        <div>
-          <PopularJobCategories />
-        </div>
-        <div>
-          <KerjaBlog />
-        </div>
-        <div>
-          <InformationData />
-        </div>
-      </main>
+      )}
       <Footer />
     </Container>
+  );
+};
+
+export default function Page() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <Home />
+    </Suspense>
   );
 }

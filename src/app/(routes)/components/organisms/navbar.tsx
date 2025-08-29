@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import DropdownMenuProfile from "../molecules/dropdown-menu";
 import ButtonAuth from "../atoms/button-auth";
+import useGetRole from "@/hook/useRole";
 
 const NavItem = [
   { id: 1, label: "Home", link: "/" },
@@ -25,6 +26,7 @@ const Navbar = () => {
   const pathname = usePathname();
   const [session, setSession] = useState<Session | null>(null);
   const [hasMounted, setHasMounted] = useState(false);
+  const { role } = useGetRole();
   const supabase = createClient();
 
   useEffect(() => {
@@ -59,23 +61,29 @@ const Navbar = () => {
             </div>
           </div>
           <ul className="lg:flex items-center gap-x-6 hidden">
-            {NavItem.map((item) => {
-              const isActive = pathname === item.link;
-              return (
-                <li key={item.id} className="text-xs">
-                  <Link
-                    href={item.link}
-                    className={
-                      isActive
-                        ? "text-black font-bold"
-                        : "text-gray-700 hover:text-black"
-                    }
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              );
-            })}
+            {role === "employer" ? (
+              <h1 className="font-semibold text-neutral-800">Dashboard Employer</h1>
+            ) : (
+              <>
+                {NavItem.map((item) => {
+                  const isActive = pathname === item.link;
+                  return (
+                    <li key={item.id} className="text-xs">
+                      <Link
+                        href={item.link}
+                        className={
+                          isActive
+                            ? "text-black font-bold"
+                            : "text-gray-700 hover:text-black"
+                        }
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </>
+            )}
           </ul>
         </div>
 

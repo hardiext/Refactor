@@ -10,6 +10,8 @@ import fallback from './fallback.png'
 import tumbnail from './tumbnail_profile.jpg'
 import exampePoto from './example-1.jpg'
 import onboarding from './onboarding.jpg'
+import employeer from './emplyerr.jpg'
+import jobseeker from './jobseeker.jpg'
 const images = {
     logo,
     meta,
@@ -22,6 +24,8 @@ const images = {
     fallback,
     tumbnail,
     exampePoto,
-    onboarding
+    onboarding,
+    jobseeker,
+    employeer
 }
 export default images

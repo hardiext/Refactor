@@ -21,6 +21,8 @@ export default function OnboardingPage() {
   const router = useRouter();
 
   const [userId, setUserId] = useState<string | null>(null);
+  const [role, setRole] = useState<"jobseeker" | "employer" | null>(null);
+
   const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
   const [city, setCity] = useState("");
@@ -30,8 +32,8 @@ export default function OnboardingPage() {
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [step, setStep] = useState(1);
-  
+  const [step, setStep] = useState(0); // step 0 = role selection
+
   useEffect(() => {
     const getUser = async () => {
       const { data } = await supabase.auth.getUser();
@@ -44,7 +46,7 @@ export default function OnboardingPage() {
         .eq("user_id", data.user?.id)
         .maybeSingle();
 
-      if (profile) router.push("/");
+      if (profile) router.push("/"); // jika profile sudah ada, skip onboarding
     };
     getUser();
   }, [supabase, router]);
@@ -53,7 +55,7 @@ export default function OnboardingPage() {
   const handleBack = () => setStep((prev) => prev - 1);
 
   const handleSubmit = async () => {
-    if (!userId) return;
+    if (!userId || !role) return;
     setLoading(true);
     setError(null);
 
@@ -61,12 +63,14 @@ export default function OnboardingPage() {
       {
         user_id: userId,
         full_name: fullName,
-        username: username,
-        city: city,
-        country: country,
-        bio: bio,
+        username,
+        city,
+        country,
+        bio,
         professional_title: prefesionalTitle,
         description,
+        roles: [role],
+        active_role: role,
       },
     ]);
 
@@ -79,6 +83,7 @@ export default function OnboardingPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-pink-50 p-6">
       <div className="w-full max-w-5xl flex flex-col lg:flex-row gap-10">
+        {/* Left Intro Section */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -86,7 +91,7 @@ export default function OnboardingPage() {
           className="lg:w-1/2 flex flex-col justify-center text-center lg:text-left space-y-6 "
         >
           <h1 className="text-3xl lg:text-4xl font-bold text-gray-800">
-            Welcome to Profile Setup
+            Welcome to <span className="text-pink-600">Onboarding</span>
           </h1>
           <p className="text-gray-600 text-lg leading-relaxed">
             Just a couple of steps and you’re ready to go. Let’s complete your
@@ -100,7 +105,6 @@ export default function OnboardingPage() {
             className="rounded-xl shadow-md mx-auto lg:mx-0"
           />
         </motion.div>
-
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -111,6 +115,11 @@ export default function OnboardingPage() {
             <CardContent className="px-8 py-6 space-y-8">
               <div>
                 <div className="mb-4">
+                  {step === 0 && (
+                    <h2 className="font-semibold text-neutral-800">
+                      Select Your Role
+                    </h2>
+                  )}
                   {step === 1 && (
                     <h2 className="font-semibold text-neutral-800">
                       Basic Information
@@ -123,7 +132,7 @@ export default function OnboardingPage() {
                   )}
                   {step === 3 && (
                     <h2 className="font-semibold text-neutral-800">
-                      Profesional Information
+                      Professional Information
                     </h2>
                   )}
                   {step === 4 && (
@@ -135,6 +144,63 @@ export default function OnboardingPage() {
                 <Progress value={(step / 4) * 100} />
                 <p className="mt-2 text-sm text-gray-500">Step {step} of 4</p>
               </div>
+              {step === 0 && (
+                <motion.div
+                  key="role"
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -50 }}
+                  transition={{ duration: 0.3 }}
+                  className="flex flex-col gap-6"
+                >
+                  <p className="text-gray-600 text-sm">
+                    Select one to personalize your experience:
+                  </p>
+                  <div className="flex gap-6 mt-4">
+                    {["jobseeker", "employer"].map((r) => (
+                      <motion.div
+                        key={r}
+                        whileHover={{ scale: 1.05 }}
+                        onClick={() => {
+                          setRole(r as "jobseeker" | "employer");
+                          handleNext();
+                        }}
+                        className={`flex-1 cursor-pointer rounded-xl p-6 text-center border transition-all
+                            ${
+                              role === r
+                                ? "bg-pink-600 text-white shadow-lg border-pink-400"
+                                : "bg-white border-gray-200"
+                            }`}
+                      >
+                        {(r === "jobseeker"
+                          ? images.jobseeker
+                          : images.employeer) && (
+                          <Image
+                            src={
+                              r === "jobseeker"
+                                ? images.jobseeker
+                                : images.employeer
+                            }
+                            alt={r}
+                            width={80}
+                            height={80}
+                            className="mx-auto mb-4"
+                          />
+                        )}
+                        <p className="font-semibold text-lg capitalize">
+                          {r.replace("-", " ")}
+                        </p>
+                        <p className="text-sm text-gray-500 mt-1">
+                          {r === "jobseeker"
+                            ? "Find your dream job"
+                            : "Post jobs & hire talent"}
+                        </p>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+
               {step === 1 && (
                 <div className="flex flex-col gap-4">
                   <div>
@@ -178,6 +244,8 @@ export default function OnboardingPage() {
                   </div>
                 </div>
               )}
+
+              {/* Step 2 - Profile Details */}
               {step === 2 && (
                 <div className="flex flex-col gap-6">
                   <CountryCitySelect
@@ -186,9 +254,7 @@ export default function OnboardingPage() {
                     city={city}
                     setCity={setCity}
                   />
-
                   {error && <p className="text-red-500 text-sm">{error}</p>}
-
                   <div className="flex justify-between">
                     <Button
                       variant="outline"
@@ -207,14 +273,14 @@ export default function OnboardingPage() {
                   </div>
                 </div>
               )}
+
+              {/* Step 3 - Professional Info */}
               {step === 3 && (
-                <div>
-                  <div className="flex flex-col gap-4">
-                    <ProfessionalTitleSelect
-                      title={prefesionalTitle}
-                      setTitle={setPrefesionalTitle}
-                    />
-                  </div>
+                <div className="flex flex-col gap-4">
+                  <ProfessionalTitleSelect
+                    title={prefesionalTitle}
+                    setTitle={setPrefesionalTitle}
+                  />
                   <div className="flex justify-between mt-6">
                     <Button
                       variant="outline"
@@ -233,6 +299,8 @@ export default function OnboardingPage() {
                   </div>
                 </div>
               )}
+
+              {/* Step 4 - Bio & Description */}
               {step === 4 && (
                 <div className="flex flex-col gap-4">
                   <div>
@@ -256,7 +324,7 @@ export default function OnboardingPage() {
                       htmlFor="description"
                       className="font-medium text-gray-700 mb-2"
                     >
-                      Description(optional)
+                      Description (optional)
                     </Label>
                     <Textarea
                       id="description"
@@ -264,7 +332,6 @@ export default function OnboardingPage() {
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
                       rows={5}
-                      required
                     />
                   </div>
                   {error && <p className="text-red-500 text-sm">{error}</p>}
@@ -278,7 +345,7 @@ export default function OnboardingPage() {
                     </Button>
                     <Button
                       onClick={handleSubmit}
-                      disabled={!bio ||  loading}
+                      disabled={!bio || loading}
                       className="bg-pink-600 hover:bg-pink-700 text-white rounded-lg"
                     >
                       {loading ? "Submitting..." : "Submit"}
