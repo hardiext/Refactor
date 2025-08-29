@@ -2,12 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ConditionalNavbar from "@/components/conditional";
-import BottomNav from "./(routes)/components/molecules/bottom-nav";
 import ConditionalBottomNav from "@/components/conditional-bottom";
-import useGetRole from "@/hook/useRole";
-import { AppSidebar } from "./(routes)/components/employer/organisms/sidebar";
-import Sidebar from "./(routes)/components/employer/organisms/warped-sidebar";
-import { SidebarProvider } from "@/components/ui/sidebar";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
