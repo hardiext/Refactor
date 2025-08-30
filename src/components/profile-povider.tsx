@@ -7,7 +7,7 @@ type ProfileContextType = ReturnType<typeof useGetProfile>;
 
 const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
 
-export function ProfileProvider({ userId, children }: { userId: string; children: ReactNode }) {
+export function ProfileProvider({ userId, children }: { userId?: string; children: ReactNode }) {
   const profileData = useGetProfile({ userId });
   return (
     <ProfileContext.Provider value={profileData}>

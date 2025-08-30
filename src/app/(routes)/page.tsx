@@ -30,7 +30,7 @@ const Home = () => {
   return (
     <Container>
       {role === "employer" ? (
-        <div className="flex items-center">
+        <div className="flex items-start ">
           <AppSidebar setMenu={setMenu} activeMenu={menu}/>
           <MainContent menu={menu} />
         </div>

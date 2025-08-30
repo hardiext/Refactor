@@ -43,7 +43,7 @@ const Navbar = () => {
   if (!hasMounted) return null;
 
   return (
-    <header className="overflow-hidden top-0 sticky z-20 border-b border-gray-100 bg-white">
+    <header className="overflow-hidden top-0 sticky z-20 border-b  border-gray-100 bg-white">
       <nav className="w-full top-0 sticky z-10 bg-white py-2 lg:px-6 px-4 flex items-center justify-between ">
         <div className="flex items-center space-x-8">
           <div className="flex items-center space-x-2">
@@ -61,9 +61,7 @@ const Navbar = () => {
             </div>
           </div>
           <ul className="lg:flex items-center gap-x-6 hidden">
-            {role === "employer" ? (
-              <h1 className="font-semibold text-neutral-800">Dashboard Employer</h1>
-            ) : (
+            {role === "jobseeker" ? (
               <>
                 {NavItem.map((item) => {
                   const isActive = pathname === item.link;
@@ -83,6 +81,9 @@ const Navbar = () => {
                   );
                 })}
               </>
+             
+            ) : (
+              <></>
             )}
           </ul>
         </div>
