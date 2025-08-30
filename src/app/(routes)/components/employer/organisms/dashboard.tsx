@@ -56,7 +56,7 @@ export function Dashboard({ userId }: { userId?: string }) {
       <div className="">
         <DashboardGrid />
       </div>
-      <article className="px-6 py-6 w-full z-10 flex-1 relative">
+      <article className="px-4 py-6 w-full z-10 flex-1 relative">
         <span className="text-xs font-medium">
           {new Date().toLocaleDateString("en-US", {
             weekday: "long",
