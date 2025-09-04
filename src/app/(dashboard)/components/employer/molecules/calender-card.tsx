@@ -20,7 +20,7 @@ const events = [
 
 export default function ScheduleCard() {
   return (
-    <div className="w-full  bg-white rounded-sm border border-gray-100 p-4">
+    <div className="w-full  bg-white rounded-sm  p-4">
       {/* Header */}
       <div className="flex justify-between items-center mb-4">
         <h2 className="font-semibold text-gray-800 text-xs">Calendar</h2>

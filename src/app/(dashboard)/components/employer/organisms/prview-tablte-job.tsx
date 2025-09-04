@@ -46,7 +46,7 @@ const jobs: Job[] = [
 
 export default function MyJobTableCard() {
   return (
-    <Card className="rounded-md shadow-none border border-gray-100  overflow-hidden pt-0 gap-0">
+    <Card className="rounded-md shadow-none border-0 border-gray-100  overflow-hidden pt-0 gap-0">
       <CardHeader className=" p-4 flex  justify-between">
         <div className="flex items-center space-x-1.5">
           <span className="text-xs">

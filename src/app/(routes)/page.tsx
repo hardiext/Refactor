@@ -8,14 +8,16 @@ import { useProfileCheck } from "@/hook/useProfileChect";
 import useGetRole from "@/hook/useRole";
 import JobSeekerContent from "./components/jobseeker/organisms/jobseeker-content";
 import Loading from "./components/atoms/loading";
-import { AppSidebar } from "./components/employer/organisms/sidebar";
-import MainContent from "./components/employer/organisms/main-content";
+import { AppSidebar } from "../(dashboard)/components/employer/organisms/sidebar";
+import MainContent from "../(dashboard)/components/employer/organisms/main-content";
+import { Dashboard } from "../(dashboard)/components/employer/organisms/dashboard";
 
 const Home = () => {
   const { role } = useGetRole();
   const router = useRouter();
   const { loading, profileExists, user } = useProfileCheck();
-  const [menu, setMenu] = useState("home");
+  const [menu, setMenu] = useState("/");
+    const [userId, setUserId] = useState<string | undefined>(undefined);
  
   useEffect(() => {
     if (!loading && user && !profileExists && role) {
@@ -30,16 +32,14 @@ const Home = () => {
   return (
     <Container>
       {role === "employer" ? (
-        <div className="flex items-start ">
-          <AppSidebar setMenu={setMenu} activeMenu={menu}/>
-          <MainContent menu={menu} />
+        <div className=" min-h-screen ">
+          <Dashboard userId={userId}/>
         </div>
       ) : (
         <div>
           <JobSeekerContent />
         </div>
       )}
-      <Footer />
     </Container>
   );
 };

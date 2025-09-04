@@ -6,7 +6,6 @@ import useGetProfile from "@/hook/useGetProfile";
 
 export default function MainContent({ menu }: { menu: any }) {
   const supabase = createClient();
-
   const [hasMounted, setHasMounted] = useState(false);
   const [session, setSession] = useState<Session | null>(null);
   const [userId, setUserId] = useState<string | undefined>(undefined);

@@ -4,6 +4,8 @@ import "./globals.css";
 import ConditionalNavbar from "@/components/conditional";
 import ConditionalBottomNav from "@/components/conditional-bottom";
 
+import EmployeeSidebar from "./(routes)/components/organisms/employer-sidebar";
+
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"], // pilih sesuai kebutuhan
@@ -19,12 +21,24 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+ 
   return (
     <html lang="en">
-     <body className={`${poppins.className} antialiased`}>
-        <ConditionalNavbar />
-        {children}
-        <ConditionalBottomNav />
+      <body className={`${poppins.className} antialiased`}>
+        <div className="flex-1 flex flex-col">
+          {/* Navbar tetap di atas */}
+          <ConditionalNavbar />
+
+          <div className="flex flex-1">
+            {/* Sidebar muncul di samping konten, tapi di bawah navbar */}
+            <EmployeeSidebar />
+
+            {/* Konten utama */}
+            <main className="flex-1 ">{children}</main>
+          </div>
+
+          <ConditionalBottomNav />
+        </div>
       </body>
     </html>
   );

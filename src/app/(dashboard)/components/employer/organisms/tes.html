@@ -1,0 +1,153 @@
+<div class="recent-card">
+  <div class="rc-header">
+    <h3>Recent Applicants</h3>
+    <a href="#">View All →</a>
+  </div>
+
+  <div class="rc-applicants">
+    <div class="rc-item">
+      <img src="https://i.pravatar.cc/70?img=21" alt="Nadia" />
+      <div class="rc-info">
+        <strong>Nadia Putri</strong>
+        <span>UI Designer</span>
+      </div>
+      <span class="rc-time">2m</span>
+    </div>
+
+    <div class="rc-item">
+      <img src="https://i.pravatar.cc/70?img=16" alt="Rizky" />
+      <div class="rc-info">
+        <strong>Rizky Maulana</strong>
+        <span>Backend Engineer</span>
+      </div>
+      <span class="rc-time">15m</span>
+    </div>
+
+    <div class="rc-item">
+      <img src="https://i.pravatar.cc/70?img=36" alt="Clara" />
+      <div class="rc-info">
+        <strong>Clara Wijaya</strong>
+        <span>Marketing Analyst</span>
+      </div>
+      <span class="rc-time">1h</span>
+    </div>
+  </div>
+
+  <div class="rc-footer">
+    <div class="rc-avatars">
+      <img src="https://i.pravatar.cc/60?img=5" />
+      <img src="https://i.pravatar.cc/60?img=12" />
+      <img src="https://i.pravatar.cc/60?img=32" />
+      <span>+9</span>
+    </div>
+    <p><b>12</b> applicants this week</p>
+  </div>
+</div>
+
+<style>
+.recent-card {
+  background: linear-gradient(135deg,#ffffff,#f7faff);
+  border-radius: 22px;
+  padding: 18px 20px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.recent-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+}
+
+.rc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.rc-header h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #111;
+}
+.rc-header a {
+  font-size: 13px;
+  font-weight: 600;
+  color: #007bff;
+  text-decoration: none;
+}
+.rc-header a:hover { text-decoration: underline; }
+
+.rc-applicants {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.rc-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  padding: 10px 12px;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: background .2s ease;
+}
+.rc-item:hover { background: #f9faff; }
+.rc-item img {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  object-fit: cover;
+}
+.rc-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.rc-info strong { font-size: 14px; color: #111; }
+.rc-info span { font-size: 12px; color: #666; }
+.rc-time {
+  font-size: 12px;
+  color: #999;
+  white-space: nowrap;
+}
+
+.rc-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.rc-avatars {
+  display: flex;
+  align-items: center;
+}
+.rc-avatars img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  margin-left: -10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.rc-avatars img:first-child { margin-left: 0; }
+.rc-avatars span {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #007bff;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: -10px;
+}
+.rc-footer p {
+  margin: 0;
+  font-size: 13px;
+  color: #333;
+}
+</style>

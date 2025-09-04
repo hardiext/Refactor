@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import {
   FiHome,
   FiBriefcase,
@@ -12,12 +11,15 @@ import { BsBarChart, BsRobot } from "react-icons/bs";
 import { BiMessageSquareDots } from "react-icons/bi";
 import { Label } from "@/components/ui/label";
 import { IoIosHelpCircleOutline } from 'react-icons/io';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 const menu = [
-  { content: "Home", menu: "home", icon: <FiHome /> },
-  { content: "Job", menu: "job", icon: <FiBriefcase /> },
-  { content: "Applicants", menu: "applicants", icon: <FiUsers /> },
-  { content: "Analytics", menu: "analytics", icon: <BsBarChart /> },
-  { content: "Message", menu: "message", icon: <BiMessageSquareDots /> },
+  { content: "Home", menu: "/", icon: <FiHome /> },
+  { content: "Job", menu: "/myjob", icon: <FiBriefcase /> },
+  { content: "Applicants", menu: "/applicants", icon: <FiUsers /> },
+  { content: "Analytics", menu: "/analytics", icon: <BsBarChart /> },
+  { content: "Message", menu: "/message", icon: <BiMessageSquareDots /> },
 ];
 
 const feature = [
@@ -30,68 +32,62 @@ const feature = [
   },
 ];
 
-export function AppSidebar({
-  setMenu,
-  activeMenu,
-}: {
-  setMenu: (menu: string) => void;
-  activeMenu: string;
- 
-}) {
+export function AppSidebar() {
+  const pathname =usePathname()
   return (
     <div className="w-1/2 lg:w-1/6 md:relative lg:flex hidden  min-h-screen flex-col justify-between border-r border-gray-100">
       <div>
         <div className="px-4 py-4 border-b">
           <Label className="mb-2 text-xs font-normal">Main</Label>
           <ul className="space-y-2">
-            {menu.map((item) => (
-              <li key={item.menu}>
+            {menu.map((item, index) => (
+              <Link href={item.menu} key={index}>
                 <button
-                  onClick={() => setMenu(item.menu)}
+                 
                   className={`w-full flex items-center gap-2 px-3 py-2 rounded-md text-xs transition 
                 ${
-                  activeMenu === item.menu
+                  pathname === item.menu
                     ? "bg-pink-50/30 text-neutral-800"
                     : "hover:bg-pink-100 text-gray-700"
                 }`}
                 >
                   <span
                     className={`${
-                      activeMenu === item.menu ? "text-pink-600" : "text-black"
+                      pathname === item.menu ? "text-pink-600" : "text-black"
                     }`}
                   >
                     {item.icon}
                   </span>
                   {item.content}
                 </button>
-              </li>
+              </Link>
             ))}
           </ul>
         </div>
         <div className="px-4 py-4 ">
           <Label className="mb-2 text-xs font-normal">Feature</Label>
           <ul className="space-y-2">
-            {feature.map((item) => (
-              <li key={item.menu}>
+            {feature.map((item, index) => (
+              <Link href={item.menu} key={index}>
                 <button
-                  onClick={() => setMenu(item.menu)}
+                
                   className={`w-full flex items-center gap-2 px-3 py-2 rounded-md text-xs transition 
                 ${
-                  activeMenu === item.menu
+                  pathname === item.menu
                     ? "bg-pink-50/30 text-neutral-800"
                     : "hover:bg-pink-100 text-gray-900"
                 }`}
                 >
                   <span
                     className={`${
-                      activeMenu === item.menu ? "text-pink-600" : "text-black"
+                      pathname === item.menu ? "text-pink-600" : "text-black"
                     }`}
                   >
                     {item.icon}
                   </span>
                   {item.content}
                 </button>
-              </li>
+              </Link>
             ))}
           </ul>
         </div>
