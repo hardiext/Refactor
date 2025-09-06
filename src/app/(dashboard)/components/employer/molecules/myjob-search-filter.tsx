@@ -24,13 +24,13 @@ export default function JobSearchFilter() {
           placeholder="Cari pekerjaan... (judul, lokasi, tipe)"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="pl-9 shadow-none placeholder:text-xs"
+          className="pl-9 shadow-none placeholder:text-xs bg-white border-gray-100"
         />
       </div>
 
       <div className=" flex gap-4">
         <Select value={status} onValueChange={setStatus}>
-          <SelectTrigger className="lg:w-[150px] w-full text-xs shadow-none">
+          <SelectTrigger className="lg:w-[150px] w-full text-xs  border-gray-100 shadow-none bg-white">
             <SelectValue
               placeholder="Semua status"
               className="placeholder:text-xs "
@@ -45,7 +45,7 @@ export default function JobSearchFilter() {
         </Select>
 
         <Select value={sort} onValueChange={setSort}>
-          <SelectTrigger className="lg:w-[120px] w-full text-xs shadow-none">
+          <SelectTrigger className="lg:w-[120px] w-full text-xs   border-gray-100 shadow-none bg-white">
             <SelectValue placeholder="Urutkan" />
           </SelectTrigger>
           <SelectContent>

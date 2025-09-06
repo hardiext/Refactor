@@ -36,8 +36,9 @@ export default function RootLayout({
             {/* Konten utama */}
             <main className="flex-1 ">{children}</main>
           </div>
-
+          <div className="hidden">  
           <ConditionalBottomNav />
+          </div>
         </div>
       </body>
     </html>
