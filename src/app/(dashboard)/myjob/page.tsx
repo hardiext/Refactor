@@ -5,12 +5,15 @@ import MyJobContent from "../components/employer/organisms/my-job-content";
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
+import useGetMyJob from "@/hook/useGetMyJob";
+import Loading from "@/app/(routes)/components/atoms/loading";
 
 const MyJob = () => {
   const [userId, setUserId] = useState<string | undefined>(undefined);
   const [hasMounted, setHasMounted] = useState(false);
   const supabase = createClient();
   const router = useRouter();
+  const {myJobs} =useGetMyJob({userId})
 
   useEffect(() => {
     setHasMounted(true);
@@ -23,10 +26,10 @@ const MyJob = () => {
 
     if (!hasMounted) return null;
     
-  if (!userId) {
+  if (!userId ) {
     return (
       <Container>
-       <h1>Sesi Anda telah habis silahkan login</h1>
+       <Loading/>
       </Container>
     );
   }
