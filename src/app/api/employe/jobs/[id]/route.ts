@@ -1,14 +1,29 @@
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
 
+interface PatchJobBody {
+  job_title?: string;
+  company_name?: string;
+  company_image?: string;
+  city?: string;
+  country?: string;
+  salary_amount?: number;
+  work_type?: string;
+  work_mode?: string;
+  experience_min?: number;
+  experience_max?: number;
+  tags?: string[];
+  job_details?: any[];
+}
+
 export async function PATCH(
   req: Request,
-  context: { params: { id: string } } // ⬅️ langsung object, bukan Promise
+  context: { params: Record<string, string> } // ✅ tipe Record<string,string> aman
 ) {
-  const { id } = context.params; // ⬅️ bisa langsung destructure
+  const { id } = context.params; // id sebagai string
   const supabase = await createClient();
 
-  // 🔒 Ambil user yg sudah diverifikasi langsung dari Supabase
+  // Ambil user yg sudah diverifikasi
   const {
     data: { user },
     error: userError,
@@ -18,7 +33,7 @@ export async function PATCH(
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const body = await req.json();
+  const body: PatchJobBody = await req.json();
 
   const {
     job_title,
@@ -35,7 +50,7 @@ export async function PATCH(
     job_details,
   } = body;
 
-  // ✏️ Update jobs table
+  // Update jobs table
   const { data: job, error: jobError } = await supabase
     .from("jobs")
     .update({
@@ -51,7 +66,7 @@ export async function PATCH(
       experience_max,
       tags,
     })
-    .eq("id", id) // ⬅️ pake id langsung
+    .eq("id", id)
     .eq("user_id", user.id)
     .select()
     .single();
@@ -60,7 +75,7 @@ export async function PATCH(
     return NextResponse.json({ error: jobError.message }, { status: 400 });
   }
 
-  // 🔄 Handle job_details → hapus lama → insert baru
+  // Handle job_details → hapus lama → insert baru
   if (job_details?.length) {
     await supabase.from("job_details").delete().eq("job_id", id);
 

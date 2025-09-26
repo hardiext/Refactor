@@ -17,7 +17,7 @@ const SelectByCategory = [
 
 const RecentApplicant = () => {
   return (
-    <article className="w-full P-2 bg-white rounded-md">
+    <article className=" P-2 max-w-full bg-white rounded-md ">
       <div className="px-1 py-2 flex items-center justify-between">
         <div className="flex items-center space-x-2">
           <div className="p-2.5 bg-neutral-50 rounded-md">
@@ -48,7 +48,7 @@ const RecentApplicant = () => {
           </div>
         </div>
       </div>
-      <div className="">
+      <div className="overflow-x-hidden">
         <ApplicantsTable/>
       </div>
     </article>
