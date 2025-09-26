@@ -1,26 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
 
-interface PatchJobBody {
-  job_title?: string;
-  company_name?: string;
-  company_image?: string;
-  city?: string;
-  country?: string;
-  salary_amount?: number;
-  work_type?: string;
-  work_mode?: string;
-  experience_min?: number;
-  experience_max?: number;
-  tags?: string[];
-  job_details?: any[];
-}
-
-export async function PATCH(
-  req: Request,
-  context: { params: Record<string, string> } // ✅ tipe Record<string,string> aman
-) {
-  const { id } = context.params; // id sebagai string
+export async function PATCH(req: Request) {
   const supabase = await createClient();
 
   // Ambil user yg sudah diverifikasi
@@ -33,7 +14,10 @@ export async function PATCH(
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const body: PatchJobBody = await req.json();
+  const body = await req.json();
+  const url = new URL(req.url);
+  const paths = url.pathname.split("/"); // ['','api','employe','jobs','[id]']
+  const id = paths[paths.length - 1]; // ambil id dari URL
 
   const {
     job_title,
