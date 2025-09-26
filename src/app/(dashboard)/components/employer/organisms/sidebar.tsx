@@ -39,7 +39,7 @@ export function AppSidebar() {
       <div>
         <div className="px-4 py-4 border-b">
           <Label className="mb-2 text-xs font-normal">Main</Label>
-          <ul className="space-y-2">
+          <ul className="flex flex-col gap-2">
             {menu.map((item, index) => (
               <Link href={item.menu} key={index}>
                 <button
@@ -66,7 +66,7 @@ export function AppSidebar() {
         </div>
         <div className="px-4 py-4 ">
           <Label className="mb-2 text-xs font-normal">Feature</Label>
-          <ul className="space-y-2">
+          <ul className="flex flex-col gap-3">
             {feature.map((item, index) => (
               <Link href={item.menu} key={index}>
                 <button

@@ -43,10 +43,10 @@ const StatCard = () => {
   return (
     <div className="grid lg:grid-cols-4 grid-cols-1 gap-2">
       {StatData.map((item, index) => (
-        <Card key={index} className="shadow-none  py-4 rounded-md border-0">
-          <CardContent>
+        <Card key={index} className="shadow-none  py-4 px-4 rounded-md border-0">
+          <CardContent className="bg-slate-50 rounded-md p-4">
             <div className="flex items-start space-x-2">
-              <div className={`p-1 inline-block rounded-sm  ${item.color}`}>
+              <div className={`p-3 inline-block rounded-lg  ${item.color}`}>
                 <span className="text-sm">{item.icon}</span>
               </div>
               <div>

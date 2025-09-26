@@ -1,9 +1,10 @@
 "use server"
-import { createServerClient } from '@supabase/ssr'
-import { cookies } from 'next/headers'
+
+import { createServerClient } from "@supabase/ssr"
+import { cookies } from "next/headers"
 
 export async function createClient() {
-  const cookieStore = await cookies()
+  const cookieStore = await cookies() // pakai await biar TS nggak error
 
   return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -19,7 +20,7 @@ export async function createClient() {
               cookieStore.set(name, value, options)
             )
           } catch {
-          
+            // di Server Components memang kadang set cookie dibatasi
           }
         },
       },

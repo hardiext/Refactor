@@ -28,10 +28,10 @@ const CardJob: React.FC<JobCardProps> = ({ job }) => {
   return (
     <Link 
       href={`/job/${job.id}`} 
-      className="block"
+      className="flex flex-col  border-gray-100 lg:rounded-md rounded-none cursor-pointer border"
       prefetch={false}
     >
-      <Card className="px-4 shadow-none border-gray-100 lg:rounded-md rounded-none cursor-pointer hover:bg-gray-50 transition-colors">
+      <Card className="px-4 shadow-none hover:bg-gray-50 transition-colors border-0">
         <CardHeader className="p-0 flex items-start justify-between">
           <div className="flex space-x-3 items-center">
             <Image

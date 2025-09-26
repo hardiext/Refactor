@@ -1,10 +1,13 @@
 "use client"
 import dynamic from "next/dynamic";
 import OtherSignIn from "../../components/molecules/other_sign";
+import Container from "@/app/(routes)/components/atoms/container";
 
 const SignForm = dynamic(() => import("../../components/organism/signin-form"), { ssr: false });
 const SignIn = () => {
   return (
+    <Container>
+
     <div className="flex flex-col min-h-screen md:grid md:grid-cols-5">
       <div className="h-[200px] md:h-auto md:col-span-3 relative overflow-hidden">
         <video
@@ -104,6 +107,7 @@ const SignIn = () => {
         </div> */}
       </div>
     </div>
+    </Container>
   );
 };
 

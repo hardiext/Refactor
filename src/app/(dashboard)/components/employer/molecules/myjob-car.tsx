@@ -12,12 +12,12 @@ import {
 import { formatDistanceToNow } from "date-fns";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import DropdownMyJobAction from "./dropdown-myjob-action";
 
 const MyJobCard = ({ userId }: { userId: string }) => {
   const { myJobs, loading, error } = useGetMyJob({ userId });
   const [showLoading, setShowLoading] = useState(false);
 
-  // kasih delay sebelum tampilkan spinner
   useEffect(() => {
     let timer: NodeJS.Timeout;
     if (loading) {
@@ -57,8 +57,13 @@ const MyJobCard = ({ userId }: { userId: string }) => {
                   relative overflow-hidden gap-2
                 "
               >
-                {/* Accent line */}
-                <div className="absolute top-0 left-0 w-1 h-full bg-pink-200"></div>
+              
+                  {/* <DropdownMyJobAction job={job}
+                  
+                  /> */}
+                
+                <div className="absolute top-0 left-0 w-1 h-full bg-pink-200">
+                </div>
 
                 <CardHeader className="flex items-center gap-3 px-0">
                   {job.company_image && (
@@ -74,6 +79,10 @@ const MyJobCard = ({ userId }: { userId: string }) => {
                     </CardTitle>
                     <p className="text-xs text-gray-500">{job.company_name}</p>
                   </div>
+                    <div className="">
+                    <DropdownMyJobAction job={job} />
+                  </div>
+               
                 </CardHeader>
 
                 <CardContent className="mt-2 text-[10px] text-gray-600 px-0">

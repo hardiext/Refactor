@@ -5,6 +5,7 @@ import ConditionalNavbar from "@/components/conditional";
 import ConditionalBottomNav from "@/components/conditional-bottom";
 
 import EmployeeSidebar from "./(routes)/components/organisms/employer-sidebar";
+import { Toaster } from "@/components/ui/sonner";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -35,6 +36,7 @@ export default function RootLayout({
 
             {/* Konten utama */}
             <main className="flex-1 ">{children}</main>
+             <Toaster />
           </div>
           <div className="hidden">  
           <ConditionalBottomNav />

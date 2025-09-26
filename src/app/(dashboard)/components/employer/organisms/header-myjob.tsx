@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
 import JobSearchFilter from "../molecules/myjob-search-filter";
 import { BlurFade } from "@/components/magicui/blur-fade";
+import JobFormDialog from "../molecules/job-form-dialog";
 
 const HeaderMyJob = () => {
   const getGretting = () => {
@@ -16,6 +17,7 @@ const HeaderMyJob = () => {
       return "Good Night";
     }
   };
+
   return (
     <article>
       <div className="lg:flex-row flex-col space-y-2 flex lg:items-center justify-between">
@@ -33,18 +35,15 @@ const HeaderMyJob = () => {
             </h1>
           </div>
         </div>
+
         <div className="flex items-center space-x-2">
-          <Button className="py-1.5 h-auto px-2 text-xs text-neutral-800 bg-white shadow-none border hover:bg-linear-to-t from-pink-500 to-red-500 hover:text-white hover:shadow-sm cursor-pointer">
-            <span className="">
-              <Download size={16} />
-            </span>{" "}
-            Add Job
+          <Button className="py-1 h-auto px-2 text-xs text-neutral-800 bg-white border shadow-none hover:bg-gradient-to-t from-pink-500 to-red-500 hover:text-white">
+            <Download size={16} />
           </Button>
-          <Button className="py-1 h-auto px-2 text-xs text-neutral-800 bg-white shadow-none border hover:bg-linear-to-t from-pink-500 to-red-500 hover:text-white hover:shadow-sm cursor-pointer">
-            <span className="text-sm font-semibold">+</span> Add Job
-          </Button>
+          <JobFormDialog />
         </div>
       </div>
+
       <div className="mt-4">
         <BlurFade inView>
           <JobSearchFilter />
@@ -53,4 +52,5 @@ const HeaderMyJob = () => {
     </article>
   );
 };
+
 export default HeaderMyJob;

@@ -12,7 +12,7 @@ const CardJobList: React.FC<jobListProps> = ({ jobs }) => {
       <h1 className="text-md font-semibold px-4 py-1 border-white rounded-md max-w-max lg:mb-4 mb-2 bg-white lg:block hidden">
         Job Explore Result <span className="text-pink-500">{jobs.length}</span>
       </h1>
-      <div className="grid lg:grid-cols-3  grid-cols-1 lg:gap-3">
+      <div className="grid lg:grid-cols-3  grid-cols-1 lg:gap-3 items-stretch">
         {jobs.map((job) => (
           <CardJob key={job.id} job={job} />
         ))}

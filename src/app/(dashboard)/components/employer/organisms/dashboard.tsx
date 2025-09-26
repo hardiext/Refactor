@@ -9,6 +9,7 @@ import StatCard from "../molecules/stat-card";
 import MyJobCard from "./prview-tablte-job";
 import MyJobTableCard from "./prview-tablte-job";
 import ScheduleCard from "../molecules/calender-card";
+import RecentApplicant from "./recent-applicant";
 interface Job {
   id: string;
   title: string;
@@ -43,13 +44,16 @@ export function Dashboard({ userId }: { userId?: string }) {
         <div className="">
           <StatCard />
         </div>
-        <div className="lg:flex-row flex-col flex  gap-4">
-          <div className="lg:w-1/2 ">
+        <div className="grid lg:grid-cols-2 grid-cols-1 w-full gap-4 items-stretch">
+          <div className="">
             <MyJobTableCard />
           </div>
-          <div className="lg:w-1/2">
+          <div className="">
             <ScheduleCard />
           </div>
+        </div>
+        <div>
+          <RecentApplicant/>
         </div>
       </article>
     </div>
